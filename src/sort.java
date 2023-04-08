@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(100, 0);
+        runSimulation(100, 4);
     }
 
     /* Runs Simulation given: 
@@ -26,6 +26,9 @@ public class sort {
         } else if (s == 3) {
             System.out.println("Running Quick Sort:");
             quickSort(n, arr);
+        } else if (s == 4) {
+            System.out.println("Running Merge Sort:");
+            mergeSort(n, arr);
         }
 
         printArray(arr);
@@ -142,5 +145,59 @@ public class sort {
         }
     }
 
+    // Sorting algorithm 4: merge sort
+    private static void mergeSort(int n, int[] arr) {
+        mergeSortHelper(arr, 0, n-1);
+    }
 
+    private static void mergeSortHelper(int arr[], int l, int r) {
+        if (l < r) {
+            int m = l + (r - l) / 2;
+
+            mergeSortHelper(arr, l, m);
+            mergeSortHelper(arr, m + 1, r);
+ 
+            merge(arr, l, m, r);
+        }
+    }
+
+    private static void merge(int arr[], int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+ 
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+ 
+        // Copy the values into temporary left and right arrays
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[m + 1 + j];
+ 
+        // Initial indexes of first and second subarrays
+        int i = 0, j = 0;
+ 
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[l] = L[i];
+                i++;
+            } else {
+                arr[l] = R[j];
+                j++;
+            }
+            l++;
+        }
+        
+        while (i < n1) {
+            arr[l] = L[i];
+            i++;
+            l++;
+        }
+ 
+        while (j < n2) {
+            arr[l] = R[j];
+            j++;
+            l++;
+        }
+    }
 }
