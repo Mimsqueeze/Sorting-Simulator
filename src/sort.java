@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(100, 4);
+        runSimulation(100, 6);
     }
 
     /* Runs Simulation given: 
@@ -29,8 +29,13 @@ public class sort {
         } else if (s == 4) {
             System.out.println("Running Merge Sort:");
             mergeSort(n, arr);
+        } else if (s == 5) {
+            System.out.println("Running Heap Sort:");
+            heapSort(n, arr);
+        } else if (s == 6) {
+            System.out.println("Running Intro Sort:");
+            introSort(n, arr);
         }
-
         printArray(arr);
     }
 
@@ -200,4 +205,176 @@ public class sort {
             l++;
         }
     }
+
+    // Sorting algorithm 5: heap sort
+    private static void heapSort(int n, int[] arr) {
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+ 
+        for (int i = n - 1; i > 0; i--) {
+            swap(arr, i, 0);
+            heapify(arr, i, 0);
+        }
+    }
+ 
+    private static void heapify(int arr[], int n, int i) {
+        int largest = i; 
+        int l = 2*i + 1;
+        int r = 2*i + 2;
+ 
+        if (l < n && arr[l] > arr[largest])
+            largest = l;
+ 
+        if (r < n && arr[r] > arr[largest])
+            largest = r;
+ 
+        if (largest != i) {
+            swap(arr, i, largest);
+            heapify(arr, n, largest);
+        }
+    }
+
+    
+    // Sorting algorithm 6: intro sort
+    private static void introSort(int n, int[] arr) {
+        introSortData(arr, n);
+    }
+
+    private static void introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
+        int temp = arr[begin + i - 1];
+        int child;
+ 
+        while (i <= heapN / 2) {
+            child = 2 * i;
+ 
+            if (child < heapN
+                && arr[begin + child - 1] < arr[begin + child])
+                child++;
+ 
+            if (temp >= arr[begin + child - 1])
+                break;
+ 
+            arr[begin + i - 1] = arr[begin + child - 1];
+            i = child;
+        }
+        arr[begin + i - 1] = temp;
+    }
+ 
+    // Function to build the heap (rearranging the array)
+    private static void introSortHeapify(int[] arr, int begin, int end, int heapN)
+    {
+        for (int i = (heapN) / 2; i >= 1; i--)
+            introSortMaxHeap(arr, i, heapN, begin);
+    }
+ 
+    // main function to do heapsort
+    private static void introSortHeapSort(int[] arr, int begin, int end)
+    {
+        int heapN = end - begin;
+ 
+        // Build heap (rearrange array)
+        introSortHeapify(arr, begin, end, heapN);
+ 
+        // One by one extract an element from heap
+        for (int i = heapN; i >= 1; i--) {
+ 
+            // Move current root to end
+            swap(arr, begin, begin + i);
+ 
+            // call maxHeap() on the reduced heap
+            introSortMaxHeap(arr, 1, i, begin);
+        }
+    }
+ 
+    // function that implements insertion sort
+    private static void introSortInsertionSort(int[] arr, int left, int right) {
+        for (int i = left; i <= right; i++) {
+            int key = arr[i];
+            int j = i;
+ 
+            // Move elements of arr[0..i-1], that are
+            // greater than the key, to one position ahead
+            // of their current position
+            while (j > left && arr[j - 1] > key) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = key;
+        }
+    }
+ 
+    // Function for finding the median of the three elements
+    private static int introSortFindPivot(int[] arr, int a1, int b1, int c1)
+    {
+        int max = Math.max(Math.max(arr[a1], arr[b1]), arr[c1]);
+        int min = Math.min(Math.min(arr[a1], arr[b1]), arr[c1]);
+        int median = max ^ min ^ arr[a1] ^ arr[b1] ^ arr[c1];
+        if (median == arr[a1])
+            return a1;
+        if (median == arr[b1])
+            return b1;
+        return c1;
+    }
+ 
+    // This function takes the last element as pivot, places
+    // the pivot element at its correct position in sorted
+    // array, and places all smaller (smaller than pivot)
+    // to the left of the pivot
+    // and greater elements to the right of the pivot
+    private static int introSortPartition(int[] arr, int low, int high) {
+ 
+        // pivot
+        int pivot = arr[high];
+ 
+        // Index of smaller element
+        int i = (low - 1);
+        for (int j = low; j <= high - 1; j++) {
+ 
+            // If the current element is smaller
+            // than or equal to the pivot
+            if (arr[j] <= pivot) {
+ 
+                // increment index of smaller element
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return (i + 1);
+    }
+ 
+    // The main function that implements Introsort
+    // low  --> Starting index,
+    // high  --> Ending index,
+    // depthLimit  --> recursion level
+    private static void introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
+        if (end - begin > 16) {
+            if (depthLimit == 0) {
+                introSortHeapSort(arr, begin, end);
+                return;
+            }
+ 
+            depthLimit = depthLimit - 1;
+            int pivot = introSortFindPivot(arr, begin, begin + ((end - begin) / 2) + 1, end);
+            swap(arr, pivot, end);
+ 
+            // p is partitioning index,
+            // arr[p] is now at right place
+            int p = partition(arr, begin, end);
+ 
+            // Separately sort elements before
+            // partition and after partition
+            introSortDataUtil(arr, begin, p - 1, depthLimit);
+            introSortDataUtil(arr, p + 1, end, depthLimit);
+        } else {
+            introSortInsertionSort(arr, begin, end);
+        }
+    }
+ 
+    private static void introSortData(int[] arr, int n){
+        int depthLimit = (int)(2 * Math.floor(Math.log(n) / Math.log(2)));
+ 
+        introSortDataUtil(arr, 0, n - 1, depthLimit);
+    }
+
 }
