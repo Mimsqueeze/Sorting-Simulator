@@ -1,0 +1,33 @@
+package src;
+
+import java.awt.*;
+
+public class graphScreen extends screen {
+    private int[] array, pointers;
+    private int size;
+    private boolean inspecting;
+    public void render(Graphics2D g) {
+        g.setBackground(new Color(0,0,139));
+        g.setColor(Color.GRAY);
+        for (int i = 0; i < size; i++) {
+            g.fillRect(i*1000/size,600-(600*array[i]/size),1000/size,(600*array[i]/size));
+        }
+        if (inspecting) {
+            g.setColor(Color.red);
+        } else {
+            g.setColor(Color.yellow);
+        }
+        for (int i = 0; i < pointers.length; i++) {
+            g.fillRect(pointers[i]*1000/size, 600-(600*array[pointers[i]]/size),1000/size,(600*array[pointers[i]]/size));
+        }
+    }
+    public void onClick(int x, int y) {
+        return;
+    }
+    public void setArrays(int[] array, int[] pointers, int size, boolean inspecting) {
+        this.array = array;
+        this.pointers = pointers;
+        this.size = size;
+        this.inspecting = inspecting;
+    }
+}
