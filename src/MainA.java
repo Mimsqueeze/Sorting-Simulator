@@ -12,13 +12,13 @@ public class MainA {
     }
     String[] sortingAlgs = {"Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort", "Heap Sort"};
     JFrame frame;
-    myPanel panel;
+    JPanel panel;
     JComboBox<String> dropDown;
     JButton run = new JButton("Simulate");
     MainA() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel = new myPanel();
+        panel = new JPanel();
         panel.setLayout(new GridLayout(20, 2));
         panel.setPreferredSize(new Dimension(1000, 600));
         dropDown = new JComboBox<>(sortingAlgs);
@@ -34,19 +34,10 @@ public class MainA {
         panel.add(run);
         frame.pack();
         frame.setVisible(true);
-        panel.paintComponent(panel.getGraphics());
     }
     private static void runGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         MainA drive = new MainA();
 
     }
-     class myPanel extends JPanel {
-         public void paintComponent(Graphics g) {
-             super.paintComponent(g);
-             //g.setColor(Color.RED);
-             //g.fillRect(0,0,500,500);
-         }
-     }
-
 }
