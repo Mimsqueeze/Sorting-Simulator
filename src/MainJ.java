@@ -1,15 +1,15 @@
-// package src;
+package src;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainJ {
     JFrame frame;
-    myPanel panel;
+    jPanel panel;
     MainJ() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel = new myPanel();
+        panel = new jPanel();
         panel.setPreferredSize(new Dimension(600, 600));
         frame.pack();
         frame.setContentPane(panel);
@@ -28,7 +28,7 @@ public class MainJ {
             }
         });
     }
-    class myPanel extends JPanel {
+    class jPanel extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.RED);
