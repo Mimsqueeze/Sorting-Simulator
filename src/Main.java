@@ -1,5 +1,10 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world");
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                startScreen startScreen = new startScreen();
+                startScreen.render();
+            }
+        });
     }
 }
