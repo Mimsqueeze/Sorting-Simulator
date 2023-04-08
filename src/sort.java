@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(10, 0);
+        runSimulation(10, 1);
     }
 
     /* Runs Simulation given: 
@@ -16,6 +16,8 @@ public class sort {
         // find correct sorting algorithm
         if (s == 0) {
             bubbleSort(n, arr);
+        } else if (s == 1) {
+            selectionSort(n, arr);
         }
 
         printArray(arr);
@@ -50,6 +52,7 @@ public class sort {
         return arr;
     }
 
+    // Swaps elements at indices a and b
     private static boolean swap(int[] arr, int a, int b) {
         int temp = arr[a];
         arr[a] = arr[b];
@@ -69,6 +72,21 @@ public class sort {
             }
             if (!swapped)
                 break;
+        }
+    }
+    
+    // Sorting algorithm 1: selection sort
+    private static void selectionSort(int n, int[] arr) {
+        for (int i = 0; i < n-1; i++) {
+            // Index of minimum elt
+            int min = i;
+
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[min])
+                    min = j;
+            }
+            
+            swap(arr, i, min);
         }
     }
 }
