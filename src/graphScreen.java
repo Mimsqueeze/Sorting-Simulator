@@ -3,9 +3,9 @@ package src;
 import java.awt.*;
 
 public class graphScreen extends screen {
-    private int[] array, pointers;
+    private int[] array, pointers = new int[0];
     private int size;
-    private boolean inspecting;
+    private boolean inspecting= false;
     public void render(Graphics2D g) {
         g.setBackground(new Color(0,0,139));
         g.setColor(Color.GRAY);
@@ -29,5 +29,8 @@ public class graphScreen extends screen {
         this.pointers = pointers;
         this.size = size;
         this.inspecting = inspecting;
+    }
+    public void setArray(int[] array) {
+        this.array = array;
     }
 }

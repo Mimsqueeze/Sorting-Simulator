@@ -1,3 +1,4 @@
+package src;
 import java.awt.*;
 import javax.swing.*;
 
@@ -20,7 +21,7 @@ public class startScreen{
         panel.setPreferredSize(new Dimension(1000, 600));
         frame.setContentPane(panel);
 
-         JLabel title = new JLabel("Sorting Algorithm Simulator");
+        JLabel title = new JLabel("Sorting Algorithm Simulator");
         title.setFont(titleFont);
         title.setForeground(Color.green);
         panel.add(title);
