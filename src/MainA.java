@@ -14,30 +14,62 @@ public class MainA {
     JFrame frame;
     JPanel panel;
     JComboBox<String> dropDown;
-    JButton run = new JButton("Simulate");
+    JButton run = new JButton("Start Simulation");
+    Font myFont = new Font("Courier New", Font.BOLD, 25);
+    Font titleFont = new Font("Courier New", Font.BOLD, 30);
     MainA() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(Color.black);
         panel = new JPanel();
+        panel.setBackground(Color.black);
         panel.setLayout(new GridLayout(20, 2));
         panel.setPreferredSize(new Dimension(1000, 600));
-        dropDown = new JComboBox<>(sortingAlgs);
         frame.setContentPane(panel);
-        panel.add(new JLabel("Sorting Algorithm Simulator"));
+
+        JLabel title = new JLabel("Sorting Algorithm Simulator");
+        title.setFont(titleFont);
+        title.setForeground(Color.green);
+        panel.add(title);
+
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
-        panel.add(new JLabel("Sorting Algorithm"));
+
+        JLabel algorithmText = new JLabel("Sorting Algorithm");
+        algorithmText.setFont(myFont);
+        algorithmText.setForeground(Color.green);
+        panel.add(algorithmText);
+
+        dropDown = new JComboBox<>(sortingAlgs);
+        dropDown.setFont(myFont);
+        //dropDown.setBackground(Color.gray);
+        //dropDown.setForeground(Color.green);
         panel.add(dropDown);
+
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
-        panel.add(new JLabel("Enter Size"));
-        panel.add(new JTextField());
+
+        JLabel sizeText = new JLabel("Enter Size");
+        sizeText.setFont(myFont);
+        sizeText.setForeground(Color.green);
+        panel.add(sizeText);
+
+        JTextField sizeInput = new JTextField();
+        sizeInput.setFont(myFont);
+        //sizeInput.setBackground(Color.gray);
+        //sizeInput.setForeground(Color.green);
+        panel.add(sizeInput);
+
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        run.setFont(myFont);
+        //run.setBackground(Color.lightGray);
+        //run.setForeground(Color.green);
         panel.add(run);
+
         frame.pack();
         frame.setVisible(true);
     }
     private static void runGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         MainA drive = new MainA();
-
     }
 }
