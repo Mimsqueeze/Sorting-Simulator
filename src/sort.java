@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(10, 1);
+        runSimulation(10, 2);
     }
 
     /* Runs Simulation given: 
@@ -15,9 +15,14 @@ public class sort {
 
         // find correct sorting algorithm
         if (s == 0) {
+            System.out.println("Running Bubble Sort: ");
             bubbleSort(n, arr);
         } else if (s == 1) {
+            System.out.println("Running Selection Sort: ");
             selectionSort(n, arr);
+        } else if (s == 2) {
+            System.out.println("Running Insertion Sort: ");
+            insertionSort(n, arr);
         }
 
         printArray(arr);
@@ -87,6 +92,19 @@ public class sort {
             }
             
             swap(arr, i, min);
+        }
+    }
+
+    // Sorting algorithm 2: insertion sort
+    private static void insertionSort(int n, int[] arr) {
+        for (int i = 1; i < n; i++) {
+            int insert = arr[i];
+            int j = i-1;
+            while ((j >= 0) && (arr[j] > insert)) {  
+                arr[j+1] = arr[j];  
+                j--;  
+            }  
+            arr[j+1] = insert;
         }
     }
 }
