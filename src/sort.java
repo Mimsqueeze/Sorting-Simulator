@@ -2,37 +2,38 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(100, 6);
+        runSimulation(100, "Bubble Sort");
     }
 
     /* Runs Simulation given: 
      - n: number of elements
      - s: sorting algorithm
     */ 
-    public static void runSimulation(int n, int s) {
+    public static void runSimulation(int n, String s) {
         int[] arr = createArray(n);
+
         printArray(arr);
 
         // find correct sorting algorithm
-        if (s == 0) {
+        if (s.equals("Bubble Sort")) {
             System.out.println("Running Bubble Sort: ");
             bubbleSort(n, arr);
-        } else if (s == 1) {
+        } else if (s.equals("Selection Sort")) {
             System.out.println("Running Selection Sort: ");
             selectionSort(n, arr);
-        } else if (s == 2) {
+        } else if (s.equals("Insertion Sort")) {
             System.out.println("Running Insertion Sort: ");
             insertionSort(n, arr);
-        } else if (s == 3) {
+        } else if (s.equals("Quick Sort")) {
             System.out.println("Running Quick Sort:");
             quickSort(n, arr);
-        } else if (s == 4) {
+        } else if (s.equals("Merge Sort")) {
             System.out.println("Running Merge Sort:");
             mergeSort(n, arr);
-        } else if (s == 5) {
+        } else if (s.equals("Heap Sort")) {
             System.out.println("Running Heap Sort:");
             heapSort(n, arr);
-        } else if (s == 6) {
+        } else if (s.equals("Intro Sort")) {
             System.out.println("Running Intro Sort:");
             introSort(n, arr);
         }
