@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class sort {
     public static void main(String[] args) {
-        runSimulation(10, 2);
+        runSimulation(100, 0);
     }
 
     /* Runs Simulation given: 
@@ -23,6 +23,9 @@ public class sort {
         } else if (s == 2) {
             System.out.println("Running Insertion Sort: ");
             insertionSort(n, arr);
+        } else if (s == 3) {
+            System.out.println("Running Quick Sort:");
+            quickSort(n, arr);
         }
 
         printArray(arr);
@@ -72,8 +75,9 @@ public class sort {
         for (i = 0; i < n - 1; i++) {
             swapped = false;
             for (j = 0; j < n - i - 1; j++) {
-                if (arr[j] > arr[j + 1])
+                if (arr[j] > arr[j + 1]) {
                     swapped = swap(arr, j, j+1);
+                }
             }
             if (!swapped)
                 break;
@@ -100,11 +104,43 @@ public class sort {
         for (int i = 1; i < n; i++) {
             int insert = arr[i];
             int j = i-1;
+
             while ((j >= 0) && (arr[j] > insert)) {  
                 arr[j+1] = arr[j];  
                 j--;  
             }  
+
             arr[j+1] = insert;
         }
     }
+
+    // Sorting algorithm 3: quick sort
+    private static void quickSort(int n, int[] arr) {
+        quickSortHelper(arr, 0, n-1);
+    }
+
+    // Partition list for quick sort
+    static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j <= high - 1; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    // quick sort recursive helper method
+    static void quickSortHelper(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSortHelper(arr, low, pi - 1);
+            quickSortHelper(arr, pi + 1, high);
+        }
+    }
+
+
 }
