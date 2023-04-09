@@ -1,18 +1,9 @@
-import org.jfugue.player.Player;
-
-public class Sound {
-    public static void main(String[] args) {
-      Player player = new Player();
-      player.play("C D E F G A B");
-    }
-  }
-
-/* import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-public class Sound {
+public class Sound extends Thread {
   public static void makeSound(int n, int v) throws LineUnavailableException {
     byte[] buf = new byte[2];
     int frequency = 44100; //44100 sample points per 1 second
@@ -38,4 +29,3 @@ public class Sound {
     sdl.stop();
   }
 }
-*/

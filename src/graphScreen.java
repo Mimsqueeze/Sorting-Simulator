@@ -8,6 +8,7 @@ public class graphScreen extends Screen {
     private int[] array, pointers = new int[0];
     private int size;
     private boolean inspecting= false;
+    Thread sound = new Sound();
 
     public void render(Graphics2D g) {
         // g.setBackground(new Color(0,0,139));
@@ -27,9 +28,10 @@ public class graphScreen extends Screen {
         }
         for (int i = 0; i < pointers.length; i++) {
             g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size), (WIDTH/size)+1, (HEIGHT*array[pointers[i]]/size));
-            try {
+            /*try {
                 Sound.makeSound(size, array[pointers[i]]);
             } catch (Exception e) {}
+            */
         }
     }
     public void onClick(int x, int y) {
