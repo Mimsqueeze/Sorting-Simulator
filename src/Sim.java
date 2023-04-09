@@ -149,13 +149,17 @@ public class Sim {
     }
 
     // Partition list for quick sort
-     int partition(int[] arr, int low, int high) {
+    int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = low - 1;
-        for (int j = low; j <= high - 1; j++) {
+        for (int j = low; j <= high - 1; j++) { 
             if (arr[j] < pivot) {
                 i++;
                 swap(arr, i, j);
+            } else {
+                // inspecting
+                int pointers[] = {j, pivot};
+                main.updateUI(arr, pointers, this.n, true); 
             }
         }
         swap(arr, i + 1, high);
@@ -204,6 +208,9 @@ public class Sim {
         int i = 0, j = 0;
  
         while (i < n1 && j < n2) {
+            // inspecting
+            int pointers[] = {l};
+            main.updateUI(arr, pointers, this.n, true); 
             if (L[i] <= R[j]) {
                 arr[l] = L[i];
                 i++;
@@ -215,12 +222,18 @@ public class Sim {
         }
         
         while (i < n1) {
+            // inspecting
+            int pointers[] = {l};
+            main.updateUI(arr, pointers, this.n, true); 
             arr[l] = L[i];
             i++;
             l++;
         }
  
         while (j < n2) {
+            // inspecting
+            int pointers[] = {l};
+            main.updateUI(arr, pointers, this.n, true); 
             arr[l] = R[j];
             j++;
             l++;
@@ -242,7 +255,7 @@ public class Sim {
         int largest = i; 
         int l = 2*i + 1;
         int r = 2*i + 2;
- 
+
         if (l < n && arr[l] > arr[largest])
             largest = l;
  
@@ -317,6 +330,10 @@ public class Sim {
             // greater than the key, to one position ahead
             // of their current position
             while (j > left && arr[j - 1] > key) {
+                // inspecting
+                int pointers[] = {j, j - 1};
+                main.updateUI(arr, pointers, this.n, true);
+
                 arr[j] = arr[j - 1];
                 j--;
             }
@@ -358,6 +375,10 @@ public class Sim {
                 // increment index of smaller element
                 i++;
                 swap(arr, i, j);
+            } else {
+                // inspecting
+                int pointers[] = {j, j+1};
+                main.updateUI(arr, pointers, this.n, true);
             }
         }
         swap(arr, i + 1, high);
@@ -397,5 +418,4 @@ public class Sim {
  
         introSortDataUtil(arr, 0, n - 1, depthLimit);
     }
-
 }

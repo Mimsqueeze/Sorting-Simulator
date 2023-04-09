@@ -23,7 +23,7 @@ public class graphScreen extends Screen {
             g.setColor(Color.red);
             inspecting= false;
         } else { // swapping
-            g.setColor(Color.black);
+            g.setColor(Color.yellow);
         }
         for (int i = 0; i < pointers.length; i++) {
             g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size), (WIDTH/size)+1, (HEIGHT*array[pointers[i]]/size));
