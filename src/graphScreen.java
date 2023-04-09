@@ -1,17 +1,21 @@
 // package src;
-
+import javax.swing.*;
 import java.awt.*;
 
-public class graphScreen extends screen {
+public class graphScreen extends Screen {
+    public static final int WIDTH = 1240, HEIGHT = 620;
+
     private int[] array, pointers = new int[0];
     private int size;
     private boolean inspecting= false;
+
     public void render(Graphics2D g) {
         // g.setBackground(new Color(0,0,139));
         // g.setBackground(Color.BLACK);
-        g.setColor(Color.yellow);
+
+        g.setColor(Color.green);
         for (int i = 0; i < size; i++) {
-            g.fillRect(i*1000/size,600-(600*array[i]/size),1000/size,(600*array[i]/size));
+            g.fillRect(i*WIDTH/size,HEIGHT-(HEIGHT*array[i]/size),(WIDTH/size)+1,(HEIGHT*array[i]/size));
         }
         if (inspecting) {
             g.setColor(Color.red);
@@ -19,7 +23,7 @@ public class graphScreen extends screen {
             g.setColor(Color.black);
         }
         for (int i = 0; i < pointers.length; i++) {
-            g.fillRect(pointers[i]*1000/size, 600-(600*array[pointers[i]]/size),1000/size,(600*array[pointers[i]]/size));
+            g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size),(WIDTH/size)+1,(HEIGHT*array[pointers[i]]/size));
         }
         g.setColor(Color.black);
     }

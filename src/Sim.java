@@ -1,10 +1,7 @@
 import java.util.LinkedList;
 
-public class sort {
-    MainJ main;
-    //public  void main(String[] args) {
-    //    runSimulation(100, "Bubble Sort");
-    //}
+public class Sim {
+    Main main;
 
     /* Runs Simulation given: 
      - n: number of elements
@@ -12,7 +9,7 @@ public class sort {
     */ 
     int n;
 
-    public void runSimulation(MainJ main, int n, String s) {
+    public void runSimulation(Main main, int n, String s) {
         int[] arr = createArray(n);
 
         this.n = n;
