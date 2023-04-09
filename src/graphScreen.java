@@ -7,19 +7,21 @@ public class graphScreen extends screen {
     private int size;
     private boolean inspecting= false;
     public void render(Graphics2D g) {
-        g.setBackground(new Color(0,0,139));
-        g.setColor(Color.GRAY);
+        // g.setBackground(new Color(0,0,139));
+        // g.setBackground(Color.BLACK);
+        g.setColor(Color.yellow);
         for (int i = 0; i < size; i++) {
             g.fillRect(i*1000/size,600-(600*array[i]/size),1000/size,(600*array[i]/size));
         }
         if (inspecting) {
             g.setColor(Color.red);
         } else {
-            g.setColor(Color.yellow);
+            g.setColor(Color.black);
         }
         for (int i = 0; i < pointers.length; i++) {
             g.fillRect(pointers[i]*1000/size, 600-(600*array[pointers[i]]/size),1000/size,(600*array[pointers[i]]/size));
         }
+        g.setColor(Color.black);
     }
     public void onClick(int x, int y) {
         return;

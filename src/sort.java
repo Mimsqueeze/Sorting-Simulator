@@ -96,6 +96,9 @@ public class sort {
         for (i = 0; i < n - 1; i++) {
             swapped = false;
             for (j = 0; j < n - i - 1; j++) {
+                // inspecting
+                int pointers[] = {j, j + 1};
+                main.updateUI(arr, pointers, this.n, true);
                 if (arr[j] > arr[j + 1]) {
                     swapped = swap(arr, j, j+1);
                 }
@@ -112,8 +115,12 @@ public class sort {
             int min = i;
 
             for (int j = i + 1; j < n; j++) {
-                if (arr[j] < arr[min])
+                // inspecting
+                int pointers[] = {j, min};
+                main.updateUI(arr, pointers, this.n, true);
+                if (arr[j] < arr[min]) {
                     min = j;
+                }
             }
             
             swap(arr, i, min);
