@@ -66,7 +66,8 @@ public class MainJ {
         String size = sizeInput.getText();
         Object algorithm = dropDown.getSelectedItem();
         panel.removeAll();
-        sort.runSimulation(Integer.parseInt(size),(String) algorithm);
+        sort newSimulation = new sort();
+        newSimulation.runSimulation(this, Integer.parseInt(size),(String) algorithm);
     }
 
     private static void runGUI() {
@@ -83,6 +84,8 @@ public class MainJ {
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting) {
+        javax.swing.SwingUtilities.updateComponentTreeUI(frame);
+        s = new graphScreen();
         s.setArrays(array,pointers,size);
         s.render((Graphics2D) panel.getGraphics());
     }
