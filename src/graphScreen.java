@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
  public class graphScreen extends Screen {
-     Main main;
+    Main main;
     public static final int WIDTH = 1240, HEIGHT = 620;
     private static final Rectangle2D restart = new Rectangle2D.Double(50, 0, 50, 50);
     private int[] array, pointers = new int[0];
