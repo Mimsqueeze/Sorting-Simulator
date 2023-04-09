@@ -9,14 +9,14 @@ public class Sim {
      - s: sorting algorithm
     */ 
     int n;
+    int[] data = new int[]{0, 0, 0};
 
     public void runSimulation(Main main, int n, String s) {
         int[] arr = createArray(n);
-
         this.n = n;
         
         this.main = main;
-        main.updateUI(arr, n);
+        main.updateUI(arr, null, n, false, data);
 
         printArray(arr);
 
@@ -43,8 +43,8 @@ public class Sim {
             System.out.println("Running Intro Sort:");
             introSort(n, arr);
         }
-        main.updateUI(arr, n);
-        main.finish(arr, n);
+        main.updateUI(arr, null, n, false, data);
+        main.finish(arr, n, data);
         printArray(arr);
     }
 
@@ -79,8 +79,9 @@ public class Sim {
 
     // Swaps elements at indices a and b
     private  boolean swap(int[] arr, int a, int b) {
+        data[1]++;
         int pointers[] = {a, b};
-        main.updateUI(arr, pointers, this.n, false);
+        main.updateUI(arr, pointers, this.n, false, data);
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
@@ -95,11 +96,12 @@ public class Sim {
             swapped = false;
             for (j = 0; j < n - i - 1; j++) {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, j + 1};
                 if (arr[j] > arr[j + 1]) {
                     swapped = swap(arr, j, j+1);
                 } else {
-                    main.updateUI(arr, pointers, this.n, true);
+                    main.updateUI(arr, pointers, this.n, true, data);
                 }
             }
             if (!swapped)
@@ -115,8 +117,9 @@ public class Sim {
 
             for (int j = i + 1; j < n; j++) {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, min};
-                main.updateUI(arr, pointers, this.n, true);
+                main.updateUI(arr, pointers, this.n, true, data);
                 if (arr[j] < arr[min]) {
                     min = j;
                 }
@@ -134,11 +137,15 @@ public class Sim {
 
             while ((j >= 0) && (arr[j] > insert)) {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, j+1};
-                main.updateUI(arr, pointers, this.n, true);  
+                main.updateUI(arr, pointers, this.n, true, data);  
                 arr[j+1] = arr[j];
+                data[2]++;
                 j--; 
             }  
+            data[0]++;
+            data[2]++;
 
             arr[j+1] = insert;
         }
@@ -159,8 +166,9 @@ public class Sim {
                 swap(arr, i, j);
             } else {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, pivot};
-                main.updateUI(arr, pointers, this.n, true); 
+                main.updateUI(arr, pointers, this.n, true, data); 
             }
         }
         swap(arr, i + 1, high);
@@ -210,12 +218,15 @@ public class Sim {
  
         while (i < n1 && j < n2) {
             // inspecting
+            data[0]++;
             int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true); 
+            main.updateUI(arr, pointers, this.n, true, data); 
             if (L[i] <= R[j]) {
+                data[2]++;
                 arr[l] = L[i];
                 i++;
             } else {
+                data[2]++;
                 arr[l] = R[j];
                 j++;
             }
@@ -224,8 +235,9 @@ public class Sim {
         
         while (i < n1) {
             // inspecting
+            data[0]++;
             int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true); 
+            main.updateUI(arr, pointers, this.n, true, data); 
             arr[l] = L[i];
             i++;
             l++;
@@ -233,8 +245,9 @@ public class Sim {
  
         while (j < n2) {
             // inspecting
+            data[0]++;
             int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true); 
+            main.updateUI(arr, pointers, this.n, true, data); 
             arr[l] = R[j];
             j++;
             l++;
@@ -244,15 +257,15 @@ public class Sim {
     // Sorting algorithm 5: heap sort
     private  void heapSort(int n, int[] arr) {
         for (int i = n / 2 - 1; i >= 0; i--)
-            heapify(arr, n, i);
+            heapify(arr, n, i, n);
  
         for (int i = n - 1; i > 0; i--) {
             swap(arr, i, 0);
-            heapify(arr, i, 0);
+            heapify(arr, i, 0, n);
         }
     }
  
-    private  void heapify(int arr[], int n, int i) {
+    private  void heapify(int arr[], int n, int i, int size) {
         int largest = i; 
         int l = 2*i + 1;
         int r = 2*i + 2;
@@ -262,10 +275,10 @@ public class Sim {
  
         if (r < n && arr[r] > arr[largest])
             largest = r;
- 
+                
         if (largest != i) {
             swap(arr, i, largest);
-            heapify(arr, n, largest);
+            heapify(arr, n, largest, size);
         }
     }
 
@@ -332,9 +345,11 @@ public class Sim {
             // of their current position
             while (j > left && arr[j - 1] > key) {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, j - 1};
-                main.updateUI(arr, pointers, this.n, true);
+                main.updateUI(arr, pointers, this.n, true, data);
 
+                data[2]++;
                 arr[j] = arr[j - 1];
                 j--;
             }
@@ -378,8 +393,9 @@ public class Sim {
                 swap(arr, i, j);
             } else {
                 // inspecting
+                data[0]++;
                 int pointers[] = {j, j+1};
-                main.updateUI(arr, pointers, this.n, true);
+                main.updateUI(arr, pointers, this.n, true, data);
             }
         }
         swap(arr, i + 1, high);
@@ -403,7 +419,7 @@ public class Sim {
  
             // p is partitioning index,
             // arr[p] is now at right place
-            int p = partition(arr, begin, end);
+            int p = introSortPartition(arr, begin, end);
  
             // Separately sort elements before
             // partition and after partition
