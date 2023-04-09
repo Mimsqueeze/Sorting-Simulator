@@ -9,7 +9,7 @@ public class MainJ {
     JPanel panel;
     JComboBox<String> dropDown;
     JTextField sizeInput = new JTextField();
-    JButton run = new JButton("Simulate");
+    JButton run = new JButton("Start Simulation");
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
     screen s;
