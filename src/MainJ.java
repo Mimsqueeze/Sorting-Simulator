@@ -84,9 +84,14 @@ public class MainJ {
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting) {
-        javax.swing.SwingUtilities.updateComponentTreeUI(frame);
         s = new graphScreen();
-        s.setArrays(array,pointers,size);
+        s.setArrays(array, pointers, size, inspecting);
+        s.render((Graphics2D) panel.getGraphics());
+    }
+
+    public void updateUI(int[] array, int size) {
+        s = new graphScreen();
+        s.setArray(array, size);
         s.render((Graphics2D) panel.getGraphics());
     }
 }

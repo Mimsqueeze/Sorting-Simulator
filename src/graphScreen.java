@@ -30,7 +30,8 @@ public class graphScreen extends screen {
         this.size = size;
         this.inspecting = inspecting;
     }
-    public void setArray(int[] array) {
+    public void setArray(int[] array, int size) {
         this.array = array;
+        this.size = size;
     }
 }

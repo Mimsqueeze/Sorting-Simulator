@@ -10,10 +10,15 @@ public class sort {
      - n: number of elements
      - s: sorting algorithm
     */ 
+    int n;
+
     public void runSimulation(MainJ main, int n, String s) {
         int[] arr = createArray(n);
 
+        this.n = n;
+        
         this.main = main;
+        main.updateUI(arr, n);
 
         printArray(arr);
 
@@ -40,6 +45,8 @@ public class sort {
             System.out.println("Running Intro Sort:");
             introSort(n, arr);
         }
+        main.updateUI(arr, n);
+
         printArray(arr);
     }
 
@@ -74,6 +81,8 @@ public class sort {
 
     // Swaps elements at indices a and b
     private  boolean swap(int[] arr, int a, int b) {
+        int pointers[] = {a, b};
+        main.updateUI(arr, pointers, this.n, false);
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
@@ -88,8 +97,6 @@ public class sort {
             swapped = false;
             for (j = 0; j < n - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    int pointers[] = {j, j+1};
-                    main.updateUI(arr, pointers, n, false);
                     swapped = swap(arr, j, j+1);
                 }
             }
