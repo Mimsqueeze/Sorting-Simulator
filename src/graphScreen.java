@@ -32,7 +32,7 @@ import javax.sound.sampled.SourceDataLine;
         }
         try {
             byte[] buf = new byte[2];
-            int frequency = 44100; //44100 sample points per 1 second
+            int frequency = 10000; //44100 sample points per 1 second
             AudioFormat af = new AudioFormat((float) frequency, 16, 1, true, false);
         
             SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
@@ -46,7 +46,7 @@ import javax.sound.sampled.SourceDataLine;
                 int offset = (int)(392*level);
                 int pitch = 392 + offset;
     
-                for (int j = 0; j < 25 * (float) 44100 / 1000; j++) { //1000 ms in 1 second
+                for (int j = 0; j < 25 * (float) 10000 / 1000; j++) { //1000 ms in 1 second
                     float numberOfSamplesToRepresentFullSin= (float) frequency / pitch;
                     double angle = j / (numberOfSamplesToRepresentFullSin/ 2.0) * Math.PI;  // /divide with 2 since sin goes 0PI to 2PI
                     short a = (short) (Math.sin(angle) * 32767);  //32767 - max value for sample to take (-32767 to 32767)
