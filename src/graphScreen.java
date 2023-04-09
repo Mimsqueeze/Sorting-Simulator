@@ -15,6 +15,10 @@ import javax.sound.sampled.SourceDataLine;
     private int size, numComparisons, numSwaps;
     private boolean inspecting= false, finish = false;
     
+    graphScreen(Main main) {
+        this.main = main;
+    }
+    
     public void render(Graphics2D g) {
         // g.setBackground(new Color(0,0,139));
         // g.setBackground(Color.BLACK);
