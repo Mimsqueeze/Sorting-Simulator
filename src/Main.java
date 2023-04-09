@@ -100,23 +100,23 @@ public class Main {
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setArrays(array, pointers, size, inspecting);
         s.render((Graphics2D) panel.getGraphics());
     }
 
     public void updateUI(int[] array, int size) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setArray(array, size);
         s.render((Graphics2D) panel.getGraphics());
     }
     public void editBox(int[] array, int size, int numComparisons, int numSwaps) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setBox(numComparisons, numSwaps);
         s.render((Graphics2D) panel.getGraphics());
     }
     public void finish(int[] array, int size) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setArray(array, size);
         s.setFinish();
         s.render((Graphics2D) panel.getGraphics());
