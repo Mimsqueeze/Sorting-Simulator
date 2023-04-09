@@ -80,10 +80,10 @@ import javax.sound.sampled.SourceDataLine;
         g.setFont(main.myFont);
         g.drawString("Comparisons: " + String.format("%.2f", (double)numComparisons), 0, 50);
         g.drawString("Swaps: " + String.format("%.2f", (double)numSwaps), 0, 75);
-        // g.drawString("Avg. Insertions: " + String.format("%.2f", numInsertions/(double)numSims), 0, 100);
-        // if (totalTime != 0) {
-        //     g.drawString("Avg. Time (nanoseconds): " + String.format("%,d", totalTime/(numSims-1)), 0, 125);
-        // }
+        g.drawString("Avg. Insertions: " + String.format("%.2f", numInsertions/(double)numSims), 0, 100);
+        if (totalTime != 0) {
+            g.drawString("Avg. Time (nanoseconds): " + String.format("%,d", totalTime/(numSims-1)), 0, 125);
+        }
         if (finish) {
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, 500, 150);
