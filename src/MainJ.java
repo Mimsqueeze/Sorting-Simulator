@@ -48,7 +48,7 @@ public class MainJ {
         sizeText.setForeground(Color.green);
         panel.add(sizeText);
 
-        //sizeInput.setFont(myFont);
+        sizeInput.setFont(myFont);
         panel.add(sizeInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
