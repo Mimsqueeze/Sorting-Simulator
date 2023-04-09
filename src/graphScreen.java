@@ -13,19 +13,21 @@ public class graphScreen extends Screen {
         // g.setBackground(new Color(0,0,139));
         // g.setBackground(Color.BLACK);
 
-        g.setColor(Color.green);
         for (int i = 0; i < size; i++) {
-            g.fillRect(i*WIDTH/size,HEIGHT-(HEIGHT*array[i]/size),(WIDTH/size)+1,(HEIGHT*array[i]/size));
+            g.setColor(Color.green);
+            g.fillRect(i*WIDTH/size, HEIGHT - (HEIGHT*array[i]/size), (WIDTH/size)+1, (HEIGHT*array[i]/size));
+            g.setColor(Color.black);
+            g.fillRect(i*WIDTH/size, 0, (WIDTH/size)+1, HEIGHT - (HEIGHT*array[i]/size));
         }
-        if (inspecting) {
+        if (inspecting) { // inspecting
             g.setColor(Color.red);
-        } else {
+            inspecting= false;
+        } else { // swapping
             g.setColor(Color.black);
         }
         for (int i = 0; i < pointers.length; i++) {
-            g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size),(WIDTH/size)+1,(HEIGHT*array[pointers[i]]/size));
+            g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size), (WIDTH/size)+1, (HEIGHT*array[pointers[i]]/size));
         }
-        g.setColor(Color.black);
     }
     public void onClick(int x, int y) {
         return;

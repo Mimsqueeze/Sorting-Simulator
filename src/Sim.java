@@ -95,9 +95,10 @@ public class Sim {
             for (j = 0; j < n - i - 1; j++) {
                 // inspecting
                 int pointers[] = {j, j + 1};
-                main.updateUI(arr, pointers, this.n, true);
                 if (arr[j] > arr[j + 1]) {
                     swapped = swap(arr, j, j+1);
+                } else {
+                    main.updateUI(arr, pointers, this.n, true);
                 }
             }
             if (!swapped)
@@ -130,9 +131,12 @@ public class Sim {
             int insert = arr[i];
             int j = i-1;
 
-            while ((j >= 0) && (arr[j] > insert)) {  
-                arr[j+1] = arr[j];  
-                j--;  
+            while ((j >= 0) && (arr[j] > insert)) {
+                // inspecting
+                int pointers[] = {j, j+1};
+                main.updateUI(arr, pointers, this.n, true);  
+                arr[j+1] = arr[j];
+                j--; 
             }  
 
             arr[j+1] = insert;
