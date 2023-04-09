@@ -1,7 +1,7 @@
-package src;
+// package src;
 import java.util.LinkedList;
 
-public class Sim {
+public class Sim extends Main {
     Main main;
 
     /* Runs Simulation given: 

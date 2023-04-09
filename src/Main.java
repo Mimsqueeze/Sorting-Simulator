@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +15,11 @@ public class Main {
     JButton run;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
-    Screen s;
+    graphScreen s;
     JLabel title;
     JLabel algorithmText;
     JLabel sizeText;
+
     Main() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +69,7 @@ public class Main {
         frame.setVisible(true);
     }
     private void onClick() {
+
         panel.removeAll();
         panel.getGraphics().setColor(Color.BLACK);
         panel.getGraphics().fillRect(0, 0, graphScreen.WIDTH, graphScreen.HEIGHT);
@@ -79,6 +81,7 @@ public class Main {
         });
         String size = sizeInput.getText();
         Object algorithm = dropDown.getSelectedItem();
+
         Sim newSimulation = new Sim();
         newSimulation.runSimulation(this, Integer.parseInt(size),(String) algorithm);
     }
@@ -97,23 +100,23 @@ public class Main {
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting) {
-        s = new graphScreen(this);
+        s = new graphScreen();
         s.setArrays(array, pointers, size, inspecting);
         s.render((Graphics2D) panel.getGraphics());
     }
 
     public void updateUI(int[] array, int size) {
-        s = new graphScreen(this);
+        s = new graphScreen();
         s.setArray(array, size);
         s.render((Graphics2D) panel.getGraphics());
     }
     public void editBox(int[] array, int size, int numComparisons, int numSwaps) {
-        s = new graphScreen(this);
+        s = new graphScreen();
         s.setBox(numComparisons, numSwaps);
         s.render((Graphics2D) panel.getGraphics());
     }
     public void finish(int[] array, int size) {
-        s = new graphScreen(this);
+        s = new graphScreen();
         s.setArray(array, size);
         s.setFinish();
         s.render((Graphics2D) panel.getGraphics());
