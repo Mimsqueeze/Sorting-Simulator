@@ -1,4 +1,4 @@
-// package src;
+package src;
 import java.awt.*;
 
 public abstract class Screen {
@@ -8,6 +8,12 @@ public abstract class Screen {
     public void setArrays(int[] array, int[] pointers, int size, boolean inspecting) {
     }
     public void setArray(int[] array, int size) {
+    }
+    public void setBox(int numComparisons, int numSwaps) {
+
+    }
+    public void setFinish() {
+
     }
 }
 

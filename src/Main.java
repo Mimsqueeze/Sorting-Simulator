@@ -1,7 +1,10 @@
-//package src;
+package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 
 public class Main {
     String[] sortingAlgs = {"Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort", "Heap Sort", "Intro Sort"};
@@ -9,7 +12,7 @@ public class Main {
     JPanel panel;
     JComboBox<String> dropDown;
     JTextField sizeInput = new JTextField();
-    JButton run = new JButton("Start Simulation");
+    JButton run;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
     Screen s;
@@ -21,6 +24,10 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
         panel.setBackground(Color.black);
+        start();
+    }
+    public void start() {
+        panel.removeAll();
         panel.setLayout(new GridLayout(20, 2));
         panel.setPreferredSize(new Dimension(graphScreen.WIDTH, graphScreen.HEIGHT));
         frame.setContentPane(panel);
@@ -52,21 +59,24 @@ public class Main {
         panel.add(sizeInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
-
+        run = new JButton("Start Simulation");
         run.setFont(myFont);
         panel.add(run);
 
         run.addActionListener(e -> onClick());
         frame.pack();
         frame.setVisible(true);
-
     }
-
     private void onClick() {
         panel.removeAll();
         panel.getGraphics().setColor(Color.BLACK);
         panel.getGraphics().fillRect(0, 0, graphScreen.WIDTH, graphScreen.HEIGHT);
-
+        panel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                Point2D click = e.getPoint();
+                s.onClick((int) click.getX(), (int) click.getY());
+            }
+        });
         String size = sizeInput.getText();
         Object algorithm = dropDown.getSelectedItem();
         Sim newSimulation = new Sim();
@@ -87,14 +97,25 @@ public class Main {
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setArrays(array, pointers, size, inspecting);
         s.render((Graphics2D) panel.getGraphics());
     }
 
     public void updateUI(int[] array, int size) {
-        s = new graphScreen();
+        s = new graphScreen(this);
         s.setArray(array, size);
+        s.render((Graphics2D) panel.getGraphics());
+    }
+    public void editBox(int[] array, int size, int numComparisons, int numSwaps) {
+        s = new graphScreen(this);
+        s.setBox(numComparisons, numSwaps);
+        s.render((Graphics2D) panel.getGraphics());
+    }
+    public void finish(int[] array, int size) {
+        s = new graphScreen(this);
+        s.setArray(array, size);
+        s.setFinish();
         s.render((Graphics2D) panel.getGraphics());
     }
 }

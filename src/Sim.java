@@ -1,3 +1,4 @@
+package src;
 import java.util.LinkedList;
 
 public class Sim {
@@ -43,7 +44,7 @@ public class Sim {
             introSort(n, arr);
         }
         main.updateUI(arr, n);
-
+        main.finish(arr, n);
         printArray(arr);
     }
 
