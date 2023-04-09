@@ -270,12 +270,32 @@ public class Sim {
         int l = 2*i + 1;
         int r = 2*i + 2;
 
-        if (l < n && arr[l] > arr[largest])
-            largest = l;
+        int pointers[] = null;
+
+        if (l < n) {
+            data[0]++;
+            pointers = new int[]{l, i};
+            if (arr[l] > arr[largest]) 
+                largest = l;
+        }
  
-        if (r < n && arr[r] > arr[largest])
-            largest = r;
-                
+        if (r < n) {
+            data[0]++;
+            if (pointers == null) {
+                pointers = new int[]{r, i};
+            } else {
+                pointers = new int[]{l, r, i};
+            }
+            if (arr[r] > arr[largest])
+                largest = r;
+        }
+
+        if (pointers == null) {
+            pointers = new int[]{i};
+        }
+
+        main.updateUI(arr, pointers, this.n, true, data); 
+
         if (largest != i) {
             swap(arr, i, largest);
             heapify(arr, n, largest, size);
@@ -295,9 +315,14 @@ public class Sim {
         while (i <= heapN / 2) {
             child = 2 * i;
  
-            if (child < heapN
-                && arr[begin + child - 1] < arr[begin + child])
-                child++;
+            if (child < heapN) {
+                if (arr[begin + child - 1] < arr[begin + child])
+                    child++;
+                // inspecting
+                data[0]++;
+                int pointers[] = {begin + child - 1, begin + child};
+                main.updateUI(arr, pointers, this.n, true, data); 
+            } 
  
             if (temp >= arr[begin + child - 1])
                 break;
