@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "jfugue-5.0.9.jar",
+        "src/jfugue-5.0.9.jar"
+    ]
+}
