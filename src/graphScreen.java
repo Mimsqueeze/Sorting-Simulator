@@ -28,6 +28,7 @@ import javax.sound.sampled.SourceDataLine;
             // fill top
             g.setColor(Color.black);
             g.fillRect(i*WIDTH/size, 0, (WIDTH/size)+1, HEIGHT - (HEIGHT*array[i]/size));
+
         }
         if (inspecting) { // inspecting
             g.setColor(Color.red);
@@ -90,6 +91,7 @@ import javax.sound.sampled.SourceDataLine;
     }
     public void onClick(int x, int y) {
         if (restart.contains((double) x, (double) y)) {
+
             main.start();
         }
     }

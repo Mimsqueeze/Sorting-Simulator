@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 public class Main {
-    String[] sortingAlgs = {"Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort", "Heap Sort", "Intro Sort"};
+    String[] sortingAlgs = {"Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort", "Heap Sort", "Intro Sort", "Bogo Sort"};
     JFrame frame;
     JPanel panel;
     JComboBox<String> dropDown;
@@ -16,8 +16,9 @@ public class Main {
     JCheckBox everyCheckBox = new JCheckBox();
     JCheckBox soundCheckBox = new JCheckBox();
     JButton run;
+    JButton exit;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
-    Font titleFont = new Font("Courier New", Font.BOLD, 30);
+    Font titleFont = new Font("Courier New", Font.BOLD, 35);
     graphScreen s;
     JLabel title;
     JLabel algorithmText;
@@ -57,22 +58,24 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        sizeText = new JLabel("Enter Size (1 - 1000)");
+        sizeText = new JLabel("Enter Size (1 - 1200)");
         sizeText.setFont(myFont);
         sizeText.setForeground(Color.green);
         panel.add(sizeText);
 
         sizeInput.setFont(myFont);
+        // sizeInput.setText("100");
         panel.add(sizeInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        simText = new JLabel("Enter Number of Simulations");
+        simText = new JLabel("Enter Number of Simulations (1 - 10000)");
         simText.setFont(myFont);
         simText.setForeground(Color.green);
         panel.add(simText);
 
         simInput.setFont(myFont);
+        // simInput.setText("1");
         panel.add(simInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -96,11 +99,20 @@ public class Main {
         run.setFont(myFont);
         panel.add(run);
 
-        run.addActionListener(e -> onClick());
+        // panel.add(Box.createRigidArea(new Dimension(10, 0)));
+        exit = new JButton("Exit");
+        exit.setFont(myFont);
+        panel.add(exit);
+
+        run.addActionListener(e -> runClick());
+        exit.addActionListener(e -> exitClick());
         frame.pack();
         frame.setVisible(true);
     }
-    private void onClick() {
+    private void exitClick() {
+        System.exit(0);
+    }
+    private void runClick() {
         panel.removeAll();
         panel.getGraphics().setColor(Color.BLACK);
         panel.getGraphics().fillRect(0, 0, graphScreen.WIDTH, graphScreen.HEIGHT);

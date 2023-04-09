@@ -145,6 +145,24 @@ public class Sim {
                     
                 }
             }
+        } else if (s.equals("Bogo Sort")) {
+            // System.out.println("Running Intro Sort:");
+            bogoSort(n, arr);
+            if (show) {
+                for (int i = 0; i < numSims - 1; i++) {
+                    arr = createArray(n);
+                    bogoSort(n,arr);
+                }
+            } else {
+                for (int i = 0; i < numSims - 1; i++) {
+                    arr = createArray(n);
+                    start = System.nanoTime();
+                    _bogoSort(n,arr);
+                    finish = System.nanoTime();
+                    totalSortingTime += finish - start;
+                    
+                }
+            }
         }
         main.updateUI(arr, null, n, false, data);
         main.finish(arr, n, data, numSims, totalSortingTime);
@@ -152,7 +170,7 @@ public class Sim {
     }
 
     // prints array
-    private  void printArray(int[] arr) {
+    private void printArray(int[] arr) {
         for (int elt : arr) {
             // System.out.print(elt + " ");
         } 
@@ -160,7 +178,7 @@ public class Sim {
     }
 
     // Creates array of size 1 to n, with elements of length 1 to n
-    private  int[] createArray(int n) {
+    private int[] createArray(int n) {
         int[] arr = new int[n];
 
         LinkedList<Integer> nums = new LinkedList<Integer>();
@@ -181,7 +199,7 @@ public class Sim {
     }
 
     // Swaps elements at indices a and b
-    private  boolean swap(int[] arr, int a, int b) {
+    private boolean swap(int[] arr, int a, int b) {
         data[1]++;
         int pointers[] = {a, b};
         main.updateUI(arr, pointers, this.n, false, data);
@@ -192,7 +210,7 @@ public class Sim {
     }
     
     // Sorting algorithm 0: bubble sort
-    private  void bubbleSort(int n, int[] arr) {
+    private void bubbleSort(int n, int[] arr) {
         int i, j;
         boolean swapped;
         for (i = 0; i < n - 1; i++) {
@@ -213,7 +231,7 @@ public class Sim {
     }
     
     // Sorting algorithm 1: selection sort
-    private  void selectionSort(int n, int[] arr) {
+    private void selectionSort(int n, int[] arr) {
         for (int i = 0; i < n-1; i++) {
             // Index of minimum elt
             int min = i;
@@ -233,7 +251,7 @@ public class Sim {
     }
 
     // Sorting algorithm 2: insertion sort
-    private  void insertionSort(int n, int[] arr) {
+    private void insertionSort(int n, int[] arr) {
         for (int i = 1; i < n; i++) {
             int insert = arr[i];
             int j = i-1;
@@ -255,7 +273,7 @@ public class Sim {
     }
 
     // Sorting algorithm 3: quick sort
-    private  void quickSort(int n, int[] arr) {
+    private void quickSort(int n, int[] arr) {
         quickSortHelper(arr, 0, n-1);
     }
 
@@ -288,11 +306,11 @@ public class Sim {
     }
 
     // Sorting algorithm 4: merge sort
-    private  void mergeSort(int n, int[] arr) {
+    private void mergeSort(int n, int[] arr) {
         mergeSortHelper(arr, 0, n-1);
     }
 
-    private  void mergeSortHelper(int arr[], int l, int r) {
+    private void mergeSortHelper(int arr[], int l, int r) {
         if (l < r) {
             int m = l + (r - l) / 2;
 
@@ -303,7 +321,7 @@ public class Sim {
         }
     }
 
-    private  void merge(int arr[], int l, int m, int r) {
+    private void merge(int arr[], int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
  
@@ -358,7 +376,7 @@ public class Sim {
     }
 
     // Sorting algorithm 5: heap sort
-    private  void heapSort(int n, int[] arr) {
+    private void heapSort(int n, int[] arr) {
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i, n);
  
@@ -368,7 +386,7 @@ public class Sim {
         }
     }
  
-    private  void heapify(int arr[], int n, int i, int size) {
+    private void heapify(int arr[], int n, int i, int size) {
         int largest = i; 
         int l = 2*i + 1;
         int r = 2*i + 2;
@@ -407,11 +425,11 @@ public class Sim {
 
     
     // Sorting algorithm 6: intro sort
-    private  void introSort(int n, int[] arr) {
+    private void introSort(int n, int[] arr) {
         introSortData(arr, n);
     }
 
-    private  void introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
+    private void introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
         int temp = arr[begin + i - 1];
         int child;
  
@@ -436,43 +454,31 @@ public class Sim {
         arr[begin + i - 1] = temp;
     }
  
-    // Function to build the heap (rearranging the array)
-    private  void introSortHeapify(int[] arr, int begin, int end, int heapN)
+    private void introSortHeapify(int[] arr, int begin, int end, int heapN)
     {
         for (int i = (heapN) / 2; i >= 1; i--)
             introSortMaxHeap(arr, i, heapN, begin);
     }
  
-    // main function to do heapsort
-    private  void introSortHeapSort(int[] arr, int begin, int end)
+    private void introSortHeapSort(int[] arr, int begin, int end)
     {
         int heapN = end - begin;
  
-        // Build heap (rearrange array)
         introSortHeapify(arr, begin, end, heapN);
  
-        // One by one extract an element from heap
         for (int i = heapN; i >= 1; i--) {
- 
-            // Move current root to end
             swap(arr, begin, begin + i);
  
-            // call maxHeap() on the reduced heap
             introSortMaxHeap(arr, 1, i, begin);
         }
     }
  
-    // function that implements insertion sort
-    private  void introSortInsertionSort(int[] arr, int left, int right) {
+    private void introSortInsertionSort(int[] arr, int left, int right) {
         for (int i = left; i <= right; i++) {
             int key = arr[i];
             int j = i;
- 
-            // Move elements of arr[0..i-1], that are
-            // greater than the key, to one position ahead
-            // of their current position
+
             while (j > left && arr[j - 1] > key) {
-                // inspecting
                 data[0]++;
                 int pointers[] = {j, j - 1};
                 main.updateUI(arr, pointers, this.n, true, data);
@@ -485,8 +491,7 @@ public class Sim {
         }
     }
  
-    // Function for finding the median of the three elements
-    private  int introSortFindPivot(int[] arr, int a1, int b1, int c1)
+    private int introSortFindPivot(int[] arr, int a1, int b1, int c1)
     {
         int max = Math.max(Math.max(arr[a1], arr[b1]), arr[c1]);
         int min = Math.min(Math.min(arr[a1], arr[b1]), arr[c1]);
@@ -498,29 +503,16 @@ public class Sim {
         return c1;
     }
  
-    // This function takes the last element as pivot, places
-    // the pivot element at its correct position in sorted
-    // array, and places all smaller (smaller than pivot)
-    // to the left of the pivot
-    // and greater elements to the right of the pivot
-    private  int introSortPartition(int[] arr, int low, int high) {
+    private int introSortPartition(int[] arr, int low, int high) {
  
-        // pivot
         int pivot = arr[high];
  
-        // Index of smaller element
         int i = (low - 1);
         for (int j = low; j <= high - 1; j++) {
- 
-            // If the current element is smaller
-            // than or equal to the pivot
             if (arr[j] <= pivot) {
- 
-                // increment index of smaller element
                 i++;
                 swap(arr, i, j);
             } else {
-                // inspecting
                 data[0]++;
                 int pointers[] = {j, j+1};
                 main.updateUI(arr, pointers, this.n, true, data);
@@ -530,11 +522,7 @@ public class Sim {
         return (i + 1);
     }
  
-    // The main function that implements Introsort
-    // low  --> Starting index,
-    // high  --> Ending index,
-    // depthLimit  --> recursion level
-    private  void introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
+    private void introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
         if (end - begin > 16) {
             if (depthLimit == 0) {
                 introSortHeapSort(arr, begin, end);
@@ -545,12 +533,8 @@ public class Sim {
             int pivot = introSortFindPivot(arr, begin, begin + ((end - begin) / 2) + 1, end);
             swap(arr, pivot, end);
  
-            // p is partitioning index,
-            // arr[p] is now at right place
             int p = introSortPartition(arr, begin, end);
  
-            // Separately sort elements before
-            // partition and after partition
             introSortDataUtil(arr, begin, p - 1, depthLimit);
             introSortDataUtil(arr, p + 1, end, depthLimit);
         } else {
@@ -558,10 +542,32 @@ public class Sim {
         }
     }
  
-    private  void introSortData(int[] arr, int n){
+    private void introSortData(int[] arr, int n){
         int depthLimit = (int)(2 * Math.floor(Math.log(n) / Math.log(2)));
  
         introSortDataUtil(arr, 0, n - 1, depthLimit);
+    }
+
+    // Sorting algorithm 7: bogo sort
+    private void bogoSort(int n, int[] arr) {
+        while (!checkSorted(n, arr)) {
+            int a, b;
+            a = (int) (Math.random()*n);
+            b = (int) (Math.random()*n);
+            swap(arr, a, b);
+        }
+    }
+
+    private boolean checkSorted(int n, int[] arr) {
+        for (int i = 0; i < n - 1; i++) {
+            data[0]++;
+            int pointers[] = {i, i+1};
+            main.updateUI(arr, pointers, this.n, true, data);
+            if (arr[i] > arr[i + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -569,7 +575,7 @@ public class Sim {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     // Swaps elements at indices a and b
-    private  boolean _swap(int[] arr, int a, int b) {
+    private boolean _swap(int[] arr, int a, int b) {
         data[1]++;
         int temp = arr[a];
         arr[a] = arr[b];
@@ -578,7 +584,7 @@ public class Sim {
     }
 
     // Sorting algorithm 0: bubble sort
-    private  void _bubbleSort(int n, int[] arr) {
+    private void _bubbleSort(int n, int[] arr) {
         int i, j;
         boolean swapped;
         for (i = 0; i < n - 1; i++) {
@@ -596,7 +602,7 @@ public class Sim {
     }
 
     // Sorting algorithm 1: selection sort
-    private  void _selectionSort(int n, int[] arr) {
+    private void _selectionSort(int n, int[] arr) {
         for (int i = 0; i < n-1; i++) {
             // Index of minimum elt
             int min = i;
@@ -614,7 +620,7 @@ public class Sim {
     }
 
     // Sorting algorithm 2: insertion sort
-    private  void _insertionSort(int n, int[] arr) {
+    private void _insertionSort(int n, int[] arr) {
         for (int i = 1; i < n; i++) {
             int insert = arr[i];
             int j = i-1;
@@ -634,7 +640,7 @@ public class Sim {
     }
 
     // Sorting algorithm 3: quick sort
-    private  void _quickSort(int n, int[] arr) {
+    private void _quickSort(int n, int[] arr) {
         _quickSortHelper(arr, 0, n-1);
     }
 
@@ -664,11 +670,11 @@ public class Sim {
     }
 
     // Sorting algorithm 4: merge sort
-    private  void _mergeSort(int n, int[] arr) {
+    private void _mergeSort(int n, int[] arr) {
         _mergeSortHelper(arr, 0, n-1);
     }
 
-    private  void _mergeSortHelper(int arr[], int l, int r) {
+    private void _mergeSortHelper(int arr[], int l, int r) {
         if (l < r) {
             int m = l + (r - l) / 2;
 
@@ -679,7 +685,7 @@ public class Sim {
         }
     }
 
-    private  void _merge(int arr[], int l, int m, int r) {
+    private void _merge(int arr[], int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
 
@@ -731,7 +737,7 @@ public class Sim {
     }
 
     // Sorting algorithm 5: heap sort
-    private  void _heapSort(int n, int[] arr) {
+    private void _heapSort(int n, int[] arr) {
         for (int i = n / 2 - 1; i >= 0; i--)
             _heapify(arr, n, i, n);
 
@@ -741,36 +747,23 @@ public class Sim {
         }
     }
 
-    private  void _heapify(int arr[], int n, int i, int size) {
+    private void _heapify(int arr[], int n, int i, int size) {
         int largest = i; 
         int l = 2*i + 1;
         int r = 2*i + 2;
 
-        int pointers[] = null;
-
         if (l < n) {
             data[0]++;
-            pointers = new int[]{l, i};
             if (arr[l] > arr[largest]) 
                 largest = l;
         }
 
         if (r < n) {
             data[0]++;
-            if (pointers == null) {
-                pointers = new int[]{r, i};
-            } else {
-                pointers = new int[]{l, r, i};
-            }
+
             if (arr[r] > arr[largest])
                 largest = r;
         }
-
-        if (pointers == null) {
-            pointers = new int[]{i};
-        }
-
-        main.updateUI(arr, pointers, this.n, true, data); 
 
         if (largest != i) {
             _swap(arr, i, largest);
@@ -780,11 +773,11 @@ public class Sim {
 
 
     // Sorting algorithm 6: intro sort
-    private  void _introSort(int n, int[] arr) {
+    private void _introSort(int n, int[] arr) {
         _introSortData(arr, n);
     }
 
-    private  void _introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
+    private void _introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
         int temp = arr[begin + i - 1];
         int child;
 
@@ -809,14 +802,14 @@ public class Sim {
     }
 
     // Function to build the heap (rearranging the array)
-    private  void _introSortHeapify(int[] arr, int begin, int end, int heapN)
+    private void _introSortHeapify(int[] arr, int begin, int end, int heapN)
     {
         for (int i = (heapN) / 2; i >= 1; i--)
             _introSortMaxHeap(arr, i, heapN, begin);
     }
 
     // main function to do heapsort
-    private  void _introSortHeapSort(int[] arr, int begin, int end)
+    private void _introSortHeapSort(int[] arr, int begin, int end)
     {
         int heapN = end - begin;
 
@@ -835,7 +828,7 @@ public class Sim {
     }
 
     // function that implements insertion sort
-    private  void _introSortInsertionSort(int[] arr, int left, int right) {
+    private void _introSortInsertionSort(int[] arr, int left, int right) {
         for (int i = left; i <= right; i++) {
             int key = arr[i];
             int j = i;
@@ -856,7 +849,7 @@ public class Sim {
     }
 
     // Function for finding the median of the three elements
-    private  int _introSortFindPivot(int[] arr, int a1, int b1, int c1)
+    private int _introSortFindPivot(int[] arr, int a1, int b1, int c1)
     {
         int max = Math.max(Math.max(arr[a1], arr[b1]), arr[c1]);
         int min = Math.min(Math.min(arr[a1], arr[b1]), arr[c1]);
@@ -873,7 +866,7 @@ public class Sim {
     // array, and places all smaller (smaller than pivot)
     // to the left of the pivot
     // and greater elements to the right of the pivot
-    private  int _introSortPartition(int[] arr, int low, int high) {
+    private int _introSortPartition(int[] arr, int low, int high) {
 
         // pivot
         int pivot = arr[high];
@@ -902,7 +895,7 @@ public class Sim {
     // low  --> Starting index,
     // high  --> Ending index,
     // depthLimit  --> recursion level
-    private  void _introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
+    private void _introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
         if (end - begin > 16) {
             if (depthLimit == 0) {
                 _introSortHeapSort(arr, begin, end);
@@ -926,9 +919,31 @@ public class Sim {
         }
     }
 
-    private  void _introSortData(int[] arr, int n){
+    private void _introSortData(int[] arr, int n){
         int depthLimit = (int)(2 * Math.floor(Math.log(n) / Math.log(2)));
 
         _introSortDataUtil(arr, 0, n - 1, depthLimit);
+    }
+
+    // Sorting algorithm 7: bogo sort
+    private void _bogoSort(int n, int[] arr) {
+        while (!checkSorted(n, arr)) {
+            int a, b;
+            a = (int) (Math.random()*n);
+            b = (int) (Math.random()*n);
+            _swap(arr, a, b);
+        }
+    }
+
+    private boolean _checkSorted(int n, int[] arr) {
+        for (int i = 0; i < n - 1; i++) {
+            data[0]++;
+            int pointers[] = {i, i+1};
+            main.updateUI(arr, pointers, this.n, true, data);
+            if (arr[i] > arr[i + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
