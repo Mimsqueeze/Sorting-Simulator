@@ -9,12 +9,11 @@ import javax.sound.sampled.SourceDataLine;
  public class graphScreen {
     Main main;
     public static final int WIDTH = 1240, HEIGHT = 620;
-    private static final Rectangle2D restart = new Rectangle2D.Double(0, 32, 175, 25);
+    private static final Rectangle2D restart = new Rectangle2D.Double(0, 132, 225, 25);
     private int[] array, pointers = new int[0];
-    private int size, numComparisons, numSwaps, numInsertions;
+    private int size, numComparisons, numSwaps, numInsertions, numSims = 1;
+    private long totalTime;
     private boolean inspecting= false, finish = false;
-
-    public boolean soundOn = false;
 
     graphScreen(Main main) {
         this.main = main;
@@ -37,7 +36,7 @@ import javax.sound.sampled.SourceDataLine;
             g.setColor(Color.yellow);
         }
 
-        if (soundOn) {
+        if (main.soundOn) {
             try {
                 for (int i = 0; i < pointers.length; i++) {
                     g.fillRect(pointers[i]*WIDTH/size, HEIGHT-(HEIGHT*array[pointers[i]]/size), (WIDTH/size)+1, (HEIGHT*array[pointers[i]]/size));
@@ -73,13 +72,20 @@ import javax.sound.sampled.SourceDataLine;
         }
         
         g.setColor(Color.white);
-        Font myFont = new Font("Courier New", Font.BOLD, 20);
-        g.setFont(myFont);
-        // g.drawRect(0,0, 50, 100);
-        g.drawString("Comparisons: " + numComparisons + " Swaps: " + numSwaps + " Insertions: " + numInsertions, 0, 25);
+
+        g.setFont(main.titleFont);
+        g.drawString((String) main.dropDown.getSelectedItem() + " (" + numSims + " Run" + ((numSims == 1) ? ")" : "s)"), 0, 25);
+
+        g.setFont(main.myFont);
+        g.drawString("Avg. Comparisons: " + String.format("%.2f", numComparisons/(double)numSims), 0, 50);
+        g.drawString("Avg. Swaps: " + String.format("%.2f", numSwaps/(double)numSims), 0, 75);
+        g.drawString("Avg. Insertions: " + String.format("%.2f", numInsertions/(double)numSims), 0, 100);
+        if (totalTime != 0) {
+            g.drawString("Avg. Time (nanoseconds): " + String.format("%,d", totalTime/(numSims-1)), 0, 125);
+        }
         if (finish) {
-            g.drawRect(0, 32, 175, 25);
-            g.drawString("New Simulation", 0, 50);
+            g.drawRect(0, 132, 225, 25);
+            g.drawString("New Simulation", 0, 150);
         }
     }
     public void onClick(int x, int y) {
@@ -102,7 +108,9 @@ import javax.sound.sampled.SourceDataLine;
         this.numSwaps = data[1];
         this.numInsertions = data[2];
     }
-    public void setFinish() {
+    public void setFinish(int numSims, long totalTime) {
         finish = true;
+        this.numSims = numSims;
+        this.totalTime = totalTime;
     }
 }

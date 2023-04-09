@@ -12,6 +12,9 @@ public class Main {
     JPanel panel;
     JComboBox<String> dropDown;
     JTextField sizeInput = new JTextField();
+    JTextField simInput = new JTextField();
+    JCheckBox everyCheckBox = new JCheckBox();
+    JCheckBox soundCheckBox = new JCheckBox();
     JButton run;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
@@ -19,6 +22,10 @@ public class Main {
     JLabel title;
     JLabel algorithmText;
     JLabel sizeText;
+    JLabel simText;
+    JLabel everyText;
+    JLabel soundText;
+    boolean soundOn;
     Main() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,13 +57,39 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        sizeText = new JLabel("Enter Size");
+        sizeText = new JLabel("Enter Size (1 - 1000)");
         sizeText.setFont(myFont);
         sizeText.setForeground(Color.green);
         panel.add(sizeText);
 
         sizeInput.setFont(myFont);
         panel.add(sizeInput);
+
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        simText = new JLabel("Enter Number of Simulations");
+        simText.setFont(myFont);
+        simText.setForeground(Color.green);
+        panel.add(simText);
+
+        simInput.setFont(myFont);
+        panel.add(simInput);
+
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        everyText = new JLabel("Show Every Simulation");
+        everyText.setFont(myFont);
+        everyText.setForeground(Color.green);
+        panel.add(everyText);
+        panel.add(everyCheckBox);
+
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        soundText = new JLabel("Sound (Slows Processing Significantly)");
+        soundText.setFont(myFont);
+        soundText.setForeground(Color.green);
+        panel.add(soundText);
+        panel.add(soundCheckBox);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
         run = new JButton("Start Simulation");
@@ -79,8 +112,11 @@ public class Main {
         });
         String size = sizeInput.getText();
         Object algorithm = dropDown.getSelectedItem();
+        String numSims = simInput.getText();
         Sim newSimulation = new Sim();
-        newSimulation.runSimulation(this, Integer.parseInt(size),(String) algorithm);
+        boolean show = everyCheckBox.isSelected();
+        this.soundOn = soundCheckBox.isSelected();
+        newSimulation.runSimulation(this, Integer.parseInt(size),(String) algorithm, Integer.parseInt(numSims), show);
     }
 
     private static void runGUI() {
@@ -110,11 +146,11 @@ public class Main {
         }
         s.render((Graphics2D) panel.getGraphics());
     }
-    public void finish(int[] array, int size, int[] data) {
+    public void finish(int[] array, int size, int[] data, int numSims, long time) {
         s = new graphScreen(this);
         s.setArray(array, size);
         s.setBox(data);
-        s.setFinish();
+        s.setFinish(numSims, time);
         s.render((Graphics2D) panel.getGraphics());
     }
 }
