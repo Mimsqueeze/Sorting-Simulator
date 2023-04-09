@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ public class MainJ {
     JFrame frame;
     JPanel panel;
     JComboBox<String> dropDown;
-    JTextField sizeInput;
+    JTextField sizeInput = new JTextField();
     JButton run = new JButton("Simulate");
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
@@ -48,7 +48,7 @@ public class MainJ {
         sizeText.setForeground(Color.green);
         panel.add(sizeText);
 
-        sizeInput.setFont(myFont);
+        //sizeInput.setFont(myFont);
         panel.add(sizeInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -57,6 +57,8 @@ public class MainJ {
         panel.add(run);
 
         run.addActionListener(e -> onClick());
+        frame.pack();
+        frame.setVisible(true);
 
     }
 
