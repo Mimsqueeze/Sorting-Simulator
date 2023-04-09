@@ -99,7 +99,7 @@ public class Main {
         run.setFont(myFont);
         panel.add(run);
 
-        // panel.add(Box.createRigidArea(new Dimension(10, 0)));
+        //panel.add(Box.createRigidArea(new Dimension(10, 1)));
         exit = new JButton("Exit");
         exit.setFont(myFont);
         panel.add(exit);
