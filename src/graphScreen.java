@@ -3,14 +3,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
- public class graphScreen extends Screen {
+ public class graphScreen {
     Main main;
     public static final int WIDTH = 1240, HEIGHT = 620;
     private static final Rectangle2D restart = new Rectangle2D.Double(50, 0, 50, 50);
     private int[] array, pointers = new int[0];
     private int size, numComparisons, numSwaps;
     private boolean inspecting= false, finish = false;
-    Thread sound = new Sound();
+
     graphScreen(Main main) {
         this.main = main;
     }

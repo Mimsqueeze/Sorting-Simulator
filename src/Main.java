@@ -15,7 +15,7 @@ public class Main {
     JButton run;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 30);
-    Screen s;
+    graphScreen s;
     JLabel title;
     JLabel algorithmText;
     JLabel sizeText;
