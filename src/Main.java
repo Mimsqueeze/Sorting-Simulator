@@ -7,7 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 public class Main {
-    String[] sortingAlgs = {"Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort", "Merge Sort", "Heap Sort", "Intro Sort", "Bogo Sort"};
+    public final String[] sortingAlgs = 
+    {
+        "Bubble Sort", "Selection Sort", "Insertion Sort", 
+        "Quick Sort", "Merge Sort", "Heap Sort", 
+        "Intro Sort", "Bogo Sort"
+    };
     JFrame frame;
     JPanel panel;
     JComboBox<String> dropDown;
@@ -23,7 +28,7 @@ public class Main {
     JLabel title;
     JLabel algorithmText;
     JLabel sizeText;
-    JLabel simText;
+    JLabel simText; 
     JLabel everyText;
     JLabel soundText;
     boolean soundOn;
@@ -99,7 +104,6 @@ public class Main {
         run.setFont(myFont);
         panel.add(run);
 
-        //panel.add(Box.createRigidArea(new Dimension(10, 1)));
         exit = new JButton("Exit");
         exit.setFont(myFont);
         panel.add(exit);

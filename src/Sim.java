@@ -172,9 +172,9 @@ public class Sim {
     // prints array
     private void printArray(int[] arr) {
         for (int elt : arr) {
-            // System.out.print(elt + " ");
+            System.out.print(elt + " ");
         } 
-        // System.out.println(); 
+        System.out.println(); 
     }
 
     // Creates array of size 1 to n, with elements of length 1 to n
@@ -297,7 +297,7 @@ public class Sim {
     }
 
     // quick sort recursive helper method
-     void quickSortHelper(int[] arr, int low, int high) {
+    void quickSortHelper(int[] arr, int low, int high) {
         if (low < high) {
             int pi = partition(arr, low, high);
             quickSortHelper(arr, low, pi - 1);
