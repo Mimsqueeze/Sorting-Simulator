@@ -7,6 +7,8 @@ public class Sim {
     /* Runs Simulation given: 
      - n: number of elements
      - s: sorting algorithm
+     - numSims - number of simultations
+     - show - whether to show graph for every simulation
     */ 
     int n;
     int[] data = new int[]{0, 0, 0};
@@ -19,11 +21,8 @@ public class Sim {
         this.main = main;
         main.updateUI(arr, null, n, false, data);
 
-        printArray(arr);
-
         // find correct sorting algorithm
         if (s.equals("Bubble Sort")) {
-            // System.out.println("Running Bubble Sort: ");
             bubbleSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -40,7 +39,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Selection Sort")) {
-            // System.out.println("Running Selection Sort: ");
             selectionSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -57,7 +55,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Insertion Sort")) {
-            // System.out.println("Running Insertion Sort: ");
             insertionSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -74,7 +71,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Quick Sort")) {
-            // System.out.println("Running Quick Sort:");
             quickSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -92,7 +88,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Merge Sort")) {
-            // System.out.println("Running Merge Sort:");
             mergeSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -110,7 +105,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Heap Sort")) {
-            // System.out.println("Running Heap Sort:");
             heapSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -128,7 +122,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Intro Sort")) {
-            // System.out.println("Running Intro Sort:");
             introSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -146,7 +139,6 @@ public class Sim {
                 }
             }
         } else if (s.equals("Bogo Sort")) {
-            // System.out.println("Running Intro Sort:");
             bogoSort(n, arr);
             if (show) {
                 for (int i = 0; i < numSims - 1; i++) {
@@ -166,7 +158,6 @@ public class Sim {
         }
         main.updateUI(arr, null, n, false, data);
         main.finish(arr, n, data, numSims, totalSortingTime);
-        printArray(arr);
     }
 
     // prints array

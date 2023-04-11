@@ -69,7 +69,6 @@ public class Main {
         panel.add(sizeText);
 
         sizeInput.setFont(myFont);
-        // sizeInput.setText("100");
         panel.add(sizeInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -80,7 +79,6 @@ public class Main {
         panel.add(simText);
 
         simInput.setFont(myFont);
-        // simInput.setText("1");
         panel.add(simInput);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -148,7 +146,7 @@ public class Main {
     }
     // if inspecting = true, pointers are for inspecting the element
     // if false, pointers are for swapping
-    // data[0] is num comparisons, data[1] is num swaps
+    // data[0] is num comparisons, data[1] is num swaps, data[3] is number of insertions
     public void updateUI(int[] array, int[] pointers, int size, boolean inspecting, int[] data) {
         s = new graphScreen(this);
         if (pointers != null) {
