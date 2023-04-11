@@ -1,3 +1,3 @@
 # Sorting-Simulator
 
-Read Me is WIP!
+ReadMe is WIP
