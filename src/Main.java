@@ -1,5 +1,3 @@
-// package src;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -7,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 public class Main {
+
+    
     public final String[] sortingAlgs = 
     {
         "Bubble Sort", "Selection Sort", "Insertion Sort", 
