@@ -18,7 +18,7 @@ public class Sim {
         this.n = n;
         
         this.main = main;
-        main.updateUI(arr, null, n, false, data);
+        main.updateUI(arr, null, n, State.NEITHER, data);
 
         // find correct sorting algorithm
         if (s.equals("Bubble Sort")) {
@@ -155,7 +155,7 @@ public class Sim {
                 }
             }
         }
-        main.updateUI(arr, null, n, false, data);
+        main.updateUI(arr, null, n, State.NEITHER, data);
         main.finish(arr, n, data, numSims, totalSortingTime);
     }
 
@@ -192,7 +192,7 @@ public class Sim {
     private boolean swap(int[] arr, int a, int b) {
         data[1]++;
         int pointers[] = {a, b};
-        main.updateUI(arr, pointers, this.n, false, data);
+        main.updateUI(arr, pointers, this.n, State.SWAPPING, data);
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
@@ -212,7 +212,7 @@ public class Sim {
                 if (arr[j] > arr[j + 1]) {
                     swapped = swap(arr, j, j+1);
                 } else {
-                    main.updateUI(arr, pointers, this.n, true, data);
+                    main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
                 }
             }
             if (!swapped)
@@ -230,7 +230,7 @@ public class Sim {
                 // inspecting
                 data[0]++;
                 int pointers[] = {j, min};
-                main.updateUI(arr, pointers, this.n, true, data);
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
                 if (arr[j] < arr[min]) {
                     min = j;
                 }
@@ -250,7 +250,7 @@ public class Sim {
                 // inspecting
                 data[0]++;
                 int pointers[] = {j, j+1};
-                main.updateUI(arr, pointers, this.n, true, data);  
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data);  
                 arr[j+1] = arr[j];
                 data[2]++;
                 j--; 
@@ -279,7 +279,7 @@ public class Sim {
                 // inspecting
                 data[0]++;
                 int pointers[] = {j, pivot};
-                main.updateUI(arr, pointers, this.n, true, data); 
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
             }
         }
         swap(arr, i + 1, high);
@@ -300,7 +300,7 @@ public class Sim {
         mergeSortHelper(arr, 0, n-1);
     }
 
-    private void mergeSortHelper(int arr[], int l, int r) {
+    private void mergeSortHelper(int[] arr, int l, int r) {
         if (l < r) {
             int m = l + (r - l) / 2;
 
@@ -311,12 +311,12 @@ public class Sim {
         }
     }
 
-    private void merge(int arr[], int l, int m, int r) {
+    private void merge(int[] arr, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
  
-        int L[] = new int[n1];
-        int R[] = new int[n2];
+        int[] L = new int[n1];
+        int[] R = new int[n2];
  
         // Copy the values into temporary left and right arrays
         for (int i = 0; i < n1; ++i)
@@ -330,8 +330,8 @@ public class Sim {
         while (i < n1 && j < n2) {
             // inspecting
             data[0]++;
-            int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true, data); 
+            int[] pointers = {l};
+            main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
             if (L[i] <= R[j]) {
                 data[2]++;
                 arr[l] = L[i];
@@ -347,8 +347,8 @@ public class Sim {
         while (i < n1) {
             // inspecting
             data[0]++;
-            int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true, data); 
+            int[] pointers = {l};
+            main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
             arr[l] = L[i];
             i++;
             l++;
@@ -357,8 +357,8 @@ public class Sim {
         while (j < n2) {
             // inspecting
             data[0]++;
-            int pointers[] = {l};
-            main.updateUI(arr, pointers, this.n, true, data); 
+            int[] pointers = {l};
+            main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
             arr[l] = R[j];
             j++;
             l++;
@@ -376,12 +376,12 @@ public class Sim {
         }
     }
  
-    private void heapify(int arr[], int n, int i, int size) {
+    private void heapify(int[] arr, int n, int i, int size) {
         int largest = i; 
         int l = 2*i + 1;
         int r = 2*i + 2;
 
-        int pointers[] = null;
+        int[] pointers = null;
 
         if (l < n) {
             data[0]++;
@@ -405,7 +405,7 @@ public class Sim {
             pointers = new int[]{i};
         }
 
-        main.updateUI(arr, pointers, this.n, true, data); 
+        main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
 
         if (largest != i) {
             swap(arr, i, largest);
@@ -432,7 +432,7 @@ public class Sim {
                 // inspecting
                 data[0]++;
                 int pointers[] = {begin + child - 1, begin + child};
-                main.updateUI(arr, pointers, this.n, true, data); 
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data); 
             } 
  
             if (temp >= arr[begin + child - 1])
@@ -470,8 +470,8 @@ public class Sim {
 
             while (j > left && arr[j - 1] > key) {
                 data[0]++;
-                int pointers[] = {j, j - 1};
-                main.updateUI(arr, pointers, this.n, true, data);
+                int[] pointers = {j, j - 1};
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
 
                 data[2]++;
                 arr[j] = arr[j - 1];
@@ -504,8 +504,8 @@ public class Sim {
                 swap(arr, i, j);
             } else {
                 data[0]++;
-                int pointers[] = {j, j+1};
-                main.updateUI(arr, pointers, this.n, true, data);
+                int[] pointers = {j, j+1};
+                main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
             }
         }
         swap(arr, i + 1, high);
@@ -551,8 +551,8 @@ public class Sim {
     private boolean checkSorted(int n, int[] arr) {
         for (int i = 0; i < n - 1; i++) {
             data[0]++;
-            int pointers[] = {i, i+1};
-            main.updateUI(arr, pointers, this.n, true, data);
+            int[] pointers = {i, i+1};
+            main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
             if (arr[i] > arr[i + 1]) {
                 return false;
             }
@@ -928,8 +928,8 @@ public class Sim {
     private boolean _checkSorted(int n, int[] arr) {
         for (int i = 0; i < n - 1; i++) {
             data[0]++;
-            int pointers[] = {i, i+1};
-            main.updateUI(arr, pointers, this.n, true, data);
+            int[] pointers = {i, i+1};
+            main.updateUI(arr, pointers, this.n, State.INSPECTING, data);
             if (arr[i] > arr[i + 1]) {
                 return false;
             }
