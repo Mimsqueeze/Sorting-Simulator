@@ -11,7 +11,7 @@ public class graphScreen {
     public static final int HEIGHT = 620;
     public static final int HEADER = 75;
     public static final int BARHEIGHT = HEIGHT - HEADER;
-
+    
     // Constants defining the color of the graph
     private static final Color BARCOLOR = Color.GREEN;
     private static final Color SWAPCOLOR = Color.YELLOW;
@@ -39,7 +39,9 @@ public class graphScreen {
     private long totalTime= 0;
 
     // Boolean flags used in processing
-    private boolean inspecting= false, finished = false;
+    
+    private State state = State.NEITHER;
+    private boolean finished = false;
     
     // graphScreen constructor to create a new frame to render
     graphScreen(Main main) {
@@ -60,26 +62,26 @@ public class graphScreen {
             g.setColor(EMPTYCOLOR);
             g.fillRect(i*WIDTH/SIZE, HEADER, (WIDTH/SIZE)+1, BARHEIGHT - (BARHEIGHT*array[i]/SIZE));
         }
-
-        if (inspecting) { // inspecting
-            g.setColor(INSPECTCOLOR);
-            inspecting= false;
-        } else { // swapping
-            g.setColor(SWAPCOLOR);
-        }
-
-        // if sound enabled, split execution to play a sound while updating the highlighted positions
-        if (main.soundOn) {
-            for (int i = 0; i < pointers.length; i++) {
-                g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
-            
-                Sound.makeSound(pointers[i], SIZE);
+        if (state != State.NEITHER) {
+            if (state == State.INSPECTING) { // inspecting
+                g.setColor(INSPECTCOLOR);
+            } else if (state == State.SWAPPING) { // swapping
+                g.setColor(SWAPCOLOR);
+                
             }
-        } else {
-            for (int i = 0; i < pointers.length; i++)
-                g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
+            state = State.NEITHER;
+            // if sound enabled, split execution to play a sound while updating the highlighted positions
+            if (main.soundOn) {
+                for (int i = 0; i < pointers.length; i++) {
+                    g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
+                
+                    Sound.makeSound(pointers[i], SIZE);
+                }
+            } else {
+                for (int i = 0; i < pointers.length; i++)
+                    g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
+            }
         }
-
         // Fill Header
         displayInformation(g);
     }
@@ -136,16 +138,16 @@ public class graphScreen {
             main.start();
     }
 
-    public void setArrays(int[] array, int[] pointers, int size, boolean inspecting) {
+    public void setArrays(int[] array, int[] pointers, int size, State state) {
         this.array = array;
         this.pointers = pointers;
         this.SIZE = size;
-        this.inspecting = inspecting;
+        this.state = state;
     }
-    public void setArray(int[] array, int size) {
-        this.array = array;
-        this.SIZE = size;
-    }
+    // public void setArray(int[] array, int size) {
+    //     this.array = array;
+    //     this.SIZE = size;
+    // }
     public void setBox(int[] data) {
         this.numComparisons = data[0];
         this.numSwaps = data[1];
