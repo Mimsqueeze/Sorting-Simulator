@@ -39,7 +39,6 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
         panel.setBackground(Color.black);
-        s = new graphScreen(this);
         start();
     }
     public void start() {
@@ -128,13 +127,14 @@ public class Main {
                 s.onClick((int) click.getX(), (int) click.getY());
             }
         });
-        String size = sizeInput.getText();
-        Object algorithm = dropDown.getSelectedItem();
-        String numSims = simInput.getText();
+        int size = Integer.parseInt(sizeInput.getText());
+        String algorithm = (String) dropDown.getSelectedItem();
+        int numSims = Integer.parseInt(simInput.getText());
         Sim newSimulation = new Sim();
-        boolean show = everyCheckBox.isSelected();
+        boolean showSimulations = everyCheckBox.isSelected();
         this.soundOn = soundCheckBox.isSelected();
-        newSimulation.runSimulation(this, Integer.parseInt(size),(String) algorithm, Integer.parseInt(numSims), show);
+        s = new graphScreen(this, size);
+        newSimulation.runSimulation(this, size, algorithm, numSims, showSimulations);
     }
 
     private static void runGUI() {
@@ -152,12 +152,7 @@ public class Main {
     // if false, pointers are for swapping
     // data[0] is num comparisons, data[1] is num swaps, data[3] is number of insertions
     public void updateUI(int[] array, int[] pointers, int size, State state, int[] data) {
-        //s = new graphScreen(this);
-        //if (pointers != null) {
-            s.setArrays(array, pointers, size, state);
-        //} else {
-        //    s.setArray(array, size);
-        //}
+        s.updateInformation(array, pointers, state);
 
         if (data != null) {
             s.setBox(data);

@@ -7,20 +7,20 @@ public class graphScreen {
     Main main;
 
     // Constants based on desired window size
-    public static final int WIDTH = 1240; 
-    public static final int HEIGHT = 620;
-    public static final int HEADER = 75;
-    public static final int BARHEIGHT = HEIGHT - HEADER;
+    public static final int WIDTH= 1240; 
+    public static final int HEIGHT= 620;
+    public static final int HEADER= 75;
+    public static final int BARHEIGHT= HEIGHT - HEADER;
     
     // Constants defining the color of the graph
-    private static final Color BARCOLOR = Color.GREEN;
-    private static final Color SWAPCOLOR = Color.YELLOW;
-    private static final Color INSPECTCOLOR = Color.RED;
-    private static final Color EMPTYCOLOR = Color.BLACK;
+    private static final Color BARCOLOR= Color.GREEN;
+    private static final Color SWAPCOLOR= Color.YELLOW;
+    private static final Color INSPECTCOLOR= Color.RED;
+    private static final Color EMPTYCOLOR= Color.BLACK;
 
     // Constants defining the color and size of the UI
-    private static final Color HEADERCOLOR = Color.BLACK;
-    private static final Color TEXTCOLOR = Color.WHITE;
+    private static final Color HEADERCOLOR= Color.BLACK;
+    private static final Color TEXTCOLOR= Color.WHITE;
 
     // Constant defining creation and dimensions of the restart button
     private static Rectangle2D restart;
@@ -32,27 +32,36 @@ public class graphScreen {
     private int SIZE;
 
     // The array of positions to be highlighted
-    private int[] pointers = new int[0];
+    private int[] pointers= new int[0];
 
     // Statistics to be displayed
-    private int numComparisons, numSwaps, numInsertions, numSims = 1;
-    private long totalTime= 0;
+    private long[] data;
+
+    // Enum to store te indiceso o f data in the array data
+    private final static class DATA_INDICES {
+        static final short NUM_COMPARISONS=  0;
+        static final short NUM_SWAPS=        1;
+        static final short NUM_INSERTIONS=   2;
+        static final short NUM_TIME=         3;
+        static final short NUM_SIMULATIONS=  4;
+    };
 
     // Boolean flags used in processing
     
-    private State state = State.NEITHER;
-    private boolean finished = false;
+    private State state= State.NEITHER;
+    private boolean finished= false;
     
     // graphScreen constructor to create a new frame to render
-    graphScreen(Main main) {
-        this.main = main;
+    graphScreen(Main main, int size) {
+        this.main= main;
+        this.SIZE= size;
     }
 
     // Function called to render each frame of the graph
     public void render(Graphics2D g) {
 
         // Fill in the rectangles (bars) for the graph
-        for (int i = 0; i < SIZE; i++) {
+        for (int i= 0; i < SIZE; i++) {
 
             // Fill the bar
             g.setColor(BARCOLOR);
@@ -67,18 +76,16 @@ public class graphScreen {
                 g.setColor(INSPECTCOLOR);
             } else if (state == State.SWAPPING) { // swapping
                 g.setColor(SWAPCOLOR);
-                
             }
-            state = State.NEITHER;
             // if sound enabled, split execution to play a sound while updating the highlighted positions
             if (main.soundOn) {
-                for (int i = 0; i < pointers.length; i++) {
+                for (int i= 0; i < pointers.length; i++) {
                     g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
                 
                     Sound.makeSound(pointers[i], SIZE);
                 }
             } else {
-                for (int i = 0; i < pointers.length; i++)
+                for (int i= 0; i < pointers.length; i++)
                     g.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
             }
         }
@@ -95,7 +102,7 @@ public class graphScreen {
         // Display title
         g.setColor(TEXTCOLOR);
         g.setFont(main.titleFont);
-        g.drawString((String) main.dropDown.getSelectedItem() + " (Run " + numSims + ")", 0, 25);
+        g.drawString((String) main.dropDown.getSelectedItem() + " (Run " + data[DATA_INDICES.NUM_SIMULATIONS] + ")", 0, 25);
 
         // Display information
         g.setFont(main.myFont);
@@ -103,30 +110,30 @@ public class graphScreen {
         // Splits execution based on finish status
         if (!finished) {
             g.drawString(
-                "Comparisons: " + String.format("%.2f", (double) numComparisons) + " " + 
-                "Swaps: "       + String.format("%.2f", (double) numSwaps) + " " +  
-                "Insertions: "  + String.format("%.2f", (double) numInsertions), 0, 50);
+                "Comparisons: " + String.format("%.2f", (double) data[DATA_INDICES.NUM_COMPARISONS]) + " " + 
+                "Swaps: "       + String.format("%.2f", (double) data[DATA_INDICES.NUM_SWAPS]) + " " +  
+                "Insertions: "  + String.format("%.2f", (double) data[DATA_INDICES.NUM_INSERTIONS]), 0, 50);
 
-            if (totalTime > 0)
-                g.drawString("Time (nanoseconds): " + String.format("%,d", totalTime/(numSims-1)), 0, 125);
+            if (data[DATA_INDICES.NUM_TIME] > 0)
+                g.drawString("Time (nanoseconds): " + String.format("%,d", data[DATA_INDICES.NUM_TIME]/(data[DATA_INDICES.NUM_SIMULATIONS]-1)), 0, 125);
 
         } else {
             g.drawString(
-                "Avg. Comparisons: " + String.format("%.2f", (double) numComparisons) + " " + 
-                "Avg. Swaps: "       + String.format("%.2f", (double) numSwaps) + " " +  
-                "Avg. Insertions: "  + String.format("%.2f", (double) numInsertions), 0, 50);
+                "Avg. Comparisons: " + String.format("%.2f", (double) data[DATA_INDICES.NUM_COMPARISONS]) + " " + 
+                "Avg. Swaps: "       + String.format("%.2f", (double) data[DATA_INDICES.NUM_SWAPS]) + " " +  
+                "Avg. Insertions: "  + String.format("%.2f", (double) data[DATA_INDICES.NUM_INSERTIONS]), 0, 50);
 
             // Y position of the restart button
-            int restartY = 57;
-            if (totalTime > 0) {
-                restartY = 100 - 18;
-                g.drawString("Avg. Time (nanoseconds): " + String.format("%,d", totalTime/(numSims-1)), 0, 75);
+            int restartYPosition= 57;
+            if (data[DATA_INDICES.NUM_TIME] > 0) {
+                restartYPosition= 100 - 18;
+                g.drawString("Avg. Time (nanoseconds): " + String.format("%,d", data[DATA_INDICES.NUM_TIME]/(data[DATA_INDICES.NUM_SIMULATIONS]-1)), 0, 75);
             }
                 
             // Creates the restart button
-            g.drawRect(0, restartY, 225, 25);
-            g.drawString("New Simulation", 0, restartY + 18);
-            restart= new Rectangle2D.Double(0, restartY, 225, 25);
+            g.drawRect(0, restartYPosition, 225, 25);
+            g.drawString("New Simulation", 0, restartYPosition + 18);
+            restart= new Rectangle2D.Double(0, restartYPosition, 225, 25);
         }
     }
 
@@ -138,25 +145,10 @@ public class graphScreen {
             main.start();
     }
 
-    public void setArrays(int[] array, int[] pointers, int size, State state) {
-        this.array = array;
-        this.pointers = pointers;
-        this.SIZE = size;
-        this.state = state;
+    public void updateInformation(int[] array, int[] pointers, long[] data, State state) {
+        this.array= array;
+        this.pointers= pointers;
+        this.data= data;        
+        this.state= state;
     }
-    // public void setArray(int[] array, int size) {
-    //     this.array = array;
-    //     this.SIZE = size;
-    // }
-    public void setBox(int[] data) {
-        this.numComparisons = data[0];
-        this.numSwaps = data[1];
-        this.numInsertions = data[2];
-    }
-    public void setFinish(int numSims, long totalTime) {
-        finished = true;
-        this.numSims = numSims;
-        this.totalTime = totalTime;
-    }
-
 }
