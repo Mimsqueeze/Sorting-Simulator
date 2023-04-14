@@ -8,12 +8,6 @@ public class GraphScreen {
 
     // Reference to Graphics2D used by Main
     Graphics2D graphics;
-
-    // Constants based on desired window size
-    public static final int WIDTH= 1440; 
-    public static final int HEIGHT= 720;
-    public static final int HEADER= 75;
-    public static final int BARHEIGHT= HEIGHT - HEADER;
     
     // Constants defining the color of the graph
     private static final Color BARCOLOR= Color.GREEN;
@@ -55,17 +49,16 @@ public class GraphScreen {
     // Function called to render each frame of the graph
     public void render() {
         this.graphics= (Graphics2D) main.panel.getGraphics();
-
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
 
             // Fill the bar
             graphics.setColor(BARCOLOR);
-            graphics.fillRect(i*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[i]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[i]/SIZE));
+            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE));
            
             // Fill space above the bar
             graphics.setColor(EMPTYCOLOR);
-            graphics.fillRect(i*WIDTH/SIZE, HEADER, (WIDTH/SIZE)+1, BARHEIGHT - (BARHEIGHT*array[i]/SIZE));
+            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEADER, (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.BARHEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE));
         }
         if (mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
             if (mode == Constants.Mode.COMPARE) { // Comparing
@@ -80,13 +73,13 @@ public class GraphScreen {
             // If sound enabled, split execution to play a sound while updating the highlighted positions
             if (main.soundOn) {
                 for (int i= 0; i < pointers.length; i++) {
-                    graphics.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
+                    graphics.fillRect(pointers[i]*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE));
                 
                     Sound.makeSound(pointers[i], SIZE);
                 }
             } else {
                 for (int i= 0; i < pointers.length; i++)
-                    graphics.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
+                    graphics.fillRect(pointers[i]*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE));
             }
         }
         // Fill Header Information
@@ -96,7 +89,7 @@ public class GraphScreen {
     private void displayInformation() {
         // Fill header
         graphics.setColor(HEADERCOLOR);
-        graphics.fillRect(0, 0, WIDTH, HEADER);
+        graphics.fillRect(0, 0, Constants.SCREEN_SIZES.WIDTH, Constants.SCREEN_SIZES.HEADER);
 
         // Display title
         graphics.setColor(TEXTCOLOR);

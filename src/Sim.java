@@ -6,7 +6,7 @@ public class Sim {
     private String algorithm;
     private int totalSimulations;
     private int[] arr;
-    private long[] data= new long[Constants.DATA_SIZE];
+    private long[] data= new long[Constants.DATA_INDICES.DATA_SIZE];
 
     public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations) {
         this.graphScreen= graphScreen;
@@ -54,16 +54,15 @@ public class Sim {
             insertionSort();
         } else if (algorithm.equals("Quick Sort")) {
             quickSort();
-        } /* else if (algorithm.equals("Merge Sort")) {
+        } else if (algorithm.equals("Merge Sort")) {
             mergeSort();
         } else if (algorithm.equals("Heap Sort")) {
             heapSort();
         } else if (algorithm.equals("Intro Sort")) {
             introSort();
-        } else if (algorithm.equals("Bogo Sort")) {
-            bogoSort();
+        } else if (algorithm.equals("Bozo Sort")) {
+            bozoSort();
         }
-        */
 
         // Update and Render the Graph Screen with mode FINISH
         graphScreen.updateRender(arr, null, data, Constants.Mode.FINISH);
@@ -238,7 +237,7 @@ public class Sim {
         }
     }
 
-    // Sorting algorithm 3: quick sort
+    // Sorting algorithm 4: Quick Sort
     private void quickSort() {
         quickSortHelper(0, size - 1);
     }
@@ -265,195 +264,169 @@ public class Sim {
         swap(i + 1, high);
         return i + 1;
     }
-    /* 
-    // Sorting algorithm 4: merge sort
-    private void mergeSort(int n, int[] arr) {
-        mergeSortHelper(arr, 0, n-1);
+ 
+    // Sorting algorithm 5: Merge Sort
+    private void mergeSort() {
+        mergeSortHelper(0, size - 1);
     }
 
-    private void mergeSortHelper(int[] arr, int l, int r) {
+    private void mergeSortHelper(int l, int r) {
         if (l < r) {
+            // Get middle index
             int m= l + (r - l) / 2;
 
-            mergeSortHelper(arr, l, m);
-            mergeSortHelper(arr, m + 1, r);
- 
-            merge(arr, l, m, r);
+            // Recursive call on subarrays
+            mergeSortHelper(l, m);
+            mergeSortHelper(m + 1, r);
+
+            // Merge the subarrays
+            merge(l, m, r);
         }
     }
 
-    private void merge(int[] arr, int l, int m, int r) {
+    private void merge(int l, int m, int r) {
+        // Size of auxiliary arrays
         int n1= m - l + 1;
         int n2= r - m;
- 
+        
+        // Create auxiliary arrays
         int[] L= new int[n1];
         int[] R= new int[n2];
  
-        // Copy the values into temporary left and right arrays
+        // Copy the values into auxiliary arrays
         for (int i= 0; i < n1; ++i)
-            L[i]= arr[l + i];
+            L[i]= read(l + i);
         for (int j= 0; j < n2; ++j)
-            R[j]= arr[m + 1 + j];
+            R[j]= read(m + 1 + j);
  
-        // Initial indexes of first and second subarrays
+        // Initial indexes of first and second auxiliary arrays
         int i= 0, j= 0;
- 
+        
+        // Write from auxiliaries into main array
         while (i < n1 && j < n2) {
-            // inspecting
-            data[0]++;
-            int[] pointers= {l};
-            main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
-            if (L[i] <= R[j]) {
-                data[2]++;
-                arr[l]= L[i];
-                i++;
-            } else {
-                data[2]++;
-                arr[l]= R[j];
-                j++;
-            }
-            l++;
+            if (L[i] <= R[j])
+                insertV(l++, L[i++]);
+            else
+                insertV(l++, R[j++]);
         }
         
-        while (i < n1) {
-            // inspecting
-            data[0]++;
-            int[] pointers= {l};
-            main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
-            arr[l]= L[i];
-            i++;
-            l++;
-        }
- 
-        while (j < n2) {
-            // inspecting
-            data[0]++;
-            int[] pointers= {l};
-            main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
-            arr[l]= R[j];
-            j++;
-            l++;
-        }
+        // Fill in rest of auxiliary array into main array
+        while (i < n1)
+            insertV(l++, L[i++]);
+        while (j < n2)
+            insertV(l++, R[j++]);
     }
 
-    // Sorting algorithm 5: heap sort
-    private void heapSort(int n, int[] arr) {
-        for (int i= n / 2 - 1; i >= 0; i--)
-            heapify(arr, n, i, n);
+    // Sorting algorithm 6: Heap Sort
+    private void heapSort() {
+        for (int i= size / 2 - 1; i >= 0; i--)
+            heapify(size, i);
  
-        for (int i= n - 1; i > 0; i--) {
-            swap(arr, i, 0);
-            heapify(arr, i, 0, n);
+        for (int i= size - 1; i > 0; i--) {
+            swap(i, 0);
+            heapify(i, 0);
         }
     }
  
-    private void heapify(int[] arr, int n, int i, int size) {
+    private void heapify(int n, int i) {
         int largest= i; 
         int l= 2*i + 1;
         int r= 2*i + 2;
 
-        int[] pointers= null;
-
-        if (l < n) {
-            data[0]++;
-            pointers= new int[]{l, i};
-            if (arr[l] > arr[largest]) 
-                largest= l;
-        }
+        if (l < n && compare(l, largest) > 0) 
+            largest= l;
  
-        if (r < n) {
-            data[0]++;
-            if (pointers == null) {
-                pointers= new int[]{r, i};
-            } else {
-                pointers= new int[]{l, r, i};
-            }
-            if (arr[r] > arr[largest])
-                largest= r;
-        }
-
-        if (pointers == null) {
-            pointers= new int[]{i};
-        }
-
-        main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
+        if (r < n && compare(r, largest) > 0)
+            largest= r;
 
         if (largest != i) {
-            swap(arr, i, largest);
-            heapify(arr, n, largest, size);
+            swap(i, largest);
+            heapify(n, largest);
         }
     }
 
-    
-    // Sorting algorithm 6: intro sort
-    private void introSort(int n, int[] arr) {
-        introSortData(arr, n);
+
+    // Sorting algorithm 7: Intro Sort
+    private void introSort() {
+        int depthLimit= (int)(2 * Math.floor(Math.log(size) / Math.log(2)));
+ 
+        introSortHelper(0, size - 1, depthLimit);
     }
 
-    private void introSortMaxHeap(int[] arr, int i, int heapN, int begin) {
-        int temp= arr[begin + i - 1];
-        int child;
- 
-        while (i <= heapN / 2) {
-            child= 2 * i;
- 
-            if (child < heapN) {
-                if (arr[begin + child - 1] < arr[begin + child])
-                    child++;
-                // inspecting
-                data[0]++;
-                int pointers[]= {begin + child - 1, begin + child};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
-            } 
- 
-            if (temp >= arr[begin + child - 1])
-                break;
- 
-            arr[begin + i - 1]= arr[begin + child - 1];
-            i= child;
-        }
-        arr[begin + i - 1]= temp;
-    }
- 
-    private void introSortHeapify(int[] arr, int begin, int end, int heapN)
-    {
-        for (int i= (heapN) / 2; i >= 1; i--)
-            introSortMaxHeap(arr, i, heapN, begin);
-    }
- 
-    private void introSortHeapSort(int[] arr, int begin, int end)
-    {
-        int heapN= end - begin;
- 
-        introSortHeapify(arr, begin, end, heapN);
- 
-        for (int i= heapN; i >= 1; i--) {
-            swap(arr, begin, begin + i);
- 
-            introSortMaxHeap(arr, 1, i, begin);
+    private void introSortHelper(int begin, int end, int depthLimit) {
+        if (end - begin > 16) {
+            if (depthLimit == 0) {
+                introSortHeapSort(begin, end);
+            } else {
+                introSortQuickSort(begin, end, depthLimit - 1);
+            }
+        } else {
+            introSortInsertionSort(begin, end);
         }
     }
- 
-    private void introSortInsertionSort(int[] arr, int left, int right) {
+
+    private void introSortInsertionSort(int left, int right) {
         for (int i= left; i <= right; i++) {
-            int key= arr[i];
+            int value= read(i);
             int j= i;
 
-            while (j > left && arr[j - 1] > key) {
-                data[0]++;
-                int[] pointers= {j, j - 1};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data);
-
-                data[2]++;
-                arr[j]= arr[j - 1];
+            while (j > left && compareV(j - 1, value) > 0) {
+                insert(j, j - 1);
                 j--;
             }
-            arr[j]= key;
+
+            insertV(j, value);
         }
     }
+    
+    private void introSortHeapSort(int begin, int end) {
+        int n= end - begin;
+        int half= n / 2;
+        for (int i= half; i >= 1; i--)
+            introSortHeapify(i, n, begin);
  
-    private int introSortFindPivot(int[] arr, int a1, int b1, int c1)
-    {
+        for (int i= n; i >= 1; i--) {
+            swap(begin, begin + i);
+            introSortHeapify(1, i, begin);
+        }
+    }
+
+    private void introSortHeapify(int i, int n, int begin) {
+        int temp= read(begin + i - 1);
+        int child;
+        int half= n / 2;
+ 
+        while (i <= half) {
+            child= 2 * i;
+ 
+            if (child < n && compare(begin + child - 1, begin + child) < 0)
+                    child++;
+ 
+            if (compareV(begin + child - 1, temp) < 0)
+                break;
+ 
+            insert(begin + i - 1, begin + child - 1);
+            i= child;
+        }
+        insertV(begin + i - 1, temp);
+    }
+
+    private void introSortQuickSort(int begin, int end, int depthLimit) {
+        /*
+        // Optional Median-Of-Three method for choosing pivots
+        int pivot= introSortFindPivot(begin, begin + ((end - begin) / 2) + 1, end);
+        swap(pivot, end);
+        */
+
+        int p= partition(begin, end); // Uses partition from Quick Sort
+
+        introSortHelper(begin, p - 1, depthLimit);
+        introSortHelper(p + 1, end, depthLimit);
+    }
+
+    /*
+    // Optional method: Median-Of-Three for choosing pivot for Intro Sort
+    private int introSortFindPivot(int a1, int b1, int c1) {
         int max= Math.max(Math.max(arr[a1], arr[b1]), arr[c1]);
         int min= Math.min(Math.min(arr[a1], arr[b1]), arr[c1]);
         int median= max ^ min ^ arr[a1] ^ arr[b1] ^ arr[c1];
@@ -463,72 +436,23 @@ public class Sim {
             return b1;
         return c1;
     }
+    */
  
-    private int introSortPartition(int[] arr, int low, int high) {
- 
-        int pivot= arr[high];
- 
-        int i= (low - 1);
-        for (int j= low; j <= high - 1; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                swap(arr, i, j);
-            } else {
-                data[0]++;
-                int[] pointers= {j, j+1};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data);
-            }
-        }
-        swap(arr, i + 1, high);
-        return (i + 1);
-    }
- 
-    private void introSortDataUtil(int[] arr, int begin, int end, int depthLimit) {
-        if (end - begin > 16) {
-            if (depthLimit == 0) {
-                introSortHeapSort(arr, begin, end);
-                return;
-            }
- 
-            depthLimit= depthLimit - 1;
-            int pivot= introSortFindPivot(arr, begin, begin + ((end - begin) / 2) + 1, end);
-            swap(arr, pivot, end);
- 
-            int p= introSortPartition(arr, begin, end);
- 
-            introSortDataUtil(arr, begin, p - 1, depthLimit);
-            introSortDataUtil(arr, p + 1, end, depthLimit);
-        } else {
-            introSortInsertionSort(arr, begin, end);
-        }
-    }
- 
-    private void introSortData(int[] arr, int n){
-        int depthLimit= (int)(2 * Math.floor(Math.log(n) / Math.log(2)));
- 
-        introSortDataUtil(arr, 0, n - 1, depthLimit);
-    }
-
-    // Sorting algorithm 7: bogo sort
-    private void bogoSort(int n, int[] arr) {
-        while (!checkSorted(n, arr)) {
+    // Sorting algorithm 8: Bozo Sort
+    private void bozoSort() {
+        while (!checkSorted()) {
             int a, b;
-            a= (int) (Math.random()*n);
-            b= (int) (Math.random()*n);
-            swap(arr, a, b);
+            a= (int) (Math.random()*size);
+            b= (int) (Math.random()*size);
+            swap(a, b);
         }
     }
 
-    private boolean checkSorted(int n, int[] arr) {
-        for (int i= 0; i < n - 1; i++) {
-            data[0]++;
-            int[] pointers= {i, i+1};
-            main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data);
-            if (arr[i] > arr[i + 1]) {
+    private boolean checkSorted() {
+        for (int i= 0; i < size - 1; i++) {
+            if (compare(i, i + 1) > 0)
                 return false;
-            }
         }
         return true;
     }
-    */
 }
