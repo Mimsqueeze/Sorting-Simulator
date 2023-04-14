@@ -6,7 +6,7 @@ public class Sim {
     private String algorithm;
     private int numSimulations;
     private int[] arr;
-    private long[] data= new long[]{0, 0, 0, 0, 0};
+    private long[] data= new long[Constants.DATA_SIZE];
 
     public Sim (GraphScreen graphScreen, int size, String algorithm, int numSimulations) {
         this.graphScreen= graphScreen;
@@ -21,6 +21,8 @@ public class Sim {
 
         // Integer array to store array to be sorted
         arr= new int[size];
+
+        // Randomizes the array's elements
         randomizeArray();
 
         // Update and Render the Graph Screen
@@ -46,13 +48,13 @@ public class Sim {
         // Find correct sorting algorithm and execute it
         if (algorithm.equals("Bubble Sort")) {
             bubbleSort();
-        } /* else if (algorithm.equals("Selection Sort")) {
+        } else if (algorithm.equals("Selection Sort")) {
             selectionSort();
         } else if (algorithm.equals("Insertion Sort")) {
             insertionSort();
         } else if (algorithm.equals("Quick Sort")) {
             quickSort();
-        } else if (algorithm.equals("Merge Sort")) {
+        } /* else if (algorithm.equals("Merge Sort")) {
             mergeSort();
         } else if (algorithm.equals("Heap Sort")) {
             heapSort();
@@ -95,7 +97,11 @@ public class Sim {
 
     // Swaps elements at indices a and b and updates graphScreen
     private boolean swap(int a, int b) {
+        // Create array of pointers
         int pointers[]= {a, b};
+
+        // Update number of swaps
+        data[Constants.DATA_INDICES.NUM_SWAPS]++;
 
         // Update the screen before the swap
         graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
@@ -106,7 +112,7 @@ public class Sim {
         arr[b]= temp;
 
         // Update the screen after the swap
-        // graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
+        graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
 
         // Return true as in swap successful
         return true;
@@ -114,7 +120,11 @@ public class Sim {
     
     // Compares the elements at indices a and b and updates graphScreen
     private int compare(int a, int b) {
+        // Create array of pointers
         int pointers[]= {a, b};
+
+        // Update number of comparisons
+        data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
 
         // Update the screen
         graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
@@ -123,97 +133,139 @@ public class Sim {
         return (arr[a] == arr[b]) ? (0) : ((arr[a] < arr[b]) ? (-1) : (1));
     }
 
-    // Sorting algorithm 0: bubble sort
+    // Compares the element at indices a and value v and updates graphScreen
+    private int compareV(int a, int v) {
+        // Create array of pointers
+        int pointers[]= {a};
+
+        // Update number of comparisons
+        data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
+
+        // Update the screen
+        graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
+
+        // Returns 0 if equal, -1 if arr[a] is less than arr[b], 1 if arr[a] is greater than arr[b]
+        return (arr[a] == v) ? (0) : ((arr[a] < v) ? (-1) : (1));
+    }
+
+    // Insert the element at index b into index a and updates graphScreen
+    private void insert(int a, int b) {
+        // Create array of pointers
+        int pointers[]= {a, b};
+
+        // Update number of insertions
+        data[Constants.DATA_INDICES.NUM_INSERTIONS]++;
+
+        // Update the screen
+        graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
+
+        // Copies value in b into a
+        arr[a]= arr[b];
+    }
+
+    // Insert the value v into index a and updates graphScreen
+    private void insertV(int a, int v) {
+        // Create array of pointers
+        int pointers[]= {a};
+
+        // Update number of insertions
+        data[Constants.DATA_INDICES.NUM_INSERTIONS]++;
+
+        // Update the screen
+        graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
+
+        // Copies value v into a
+        arr[a]= v;
+    }
+
+    // Reads the value at index a, updates graphScreen, and returns the value
+    private int read(int a) {
+        // Create array of pointers
+        int pointers[]= {a};
+
+        // Update number of insertions
+        data[Constants.DATA_INDICES.NUM_READS]++;
+
+        // Update the screen
+        graphScreen.updateRender(arr, pointers, data, Constants.Mode.READ);
+
+        // Returns value at index a
+        return arr[a];
+    }
+
+    // Sorting algorithm 1: Bubble Sort
     private void bubbleSort() {
         int i, j;
         boolean swapped;
         for (i= 0; i <= size - 1; i++) {
             swapped= false;
             for (j= 0; j < size - i - 1; j++) {
-                if (compare(j, j+1) > 0)
-                    swapped= swap(j, j+1);
+                if (compare(j, j + 1) > 0)
+                    swapped= swap(j, j + 1);
             }
             if (!swapped)
                 break;
         }
     }
     
-    /* 
-    // Sorting algorithm 1: selection sort
-    private void selectionSort(int n, int[] arr) {
-        for (int i= 0; i < n-1; i++) {
+
+    // Sorting algorithm 2: Selection Sort
+    private void selectionSort() {
+        for (int i= 0; i < size - 1; i++) {
             // Index of minimum elt
             int min= i;
 
-            for (int j= i + 1; j < n; j++) {
-                // inspecting
-                data[0]++;
-                int pointers[]= {j, min};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data);
-                if (arr[j] < arr[min]) {
+            for (int j= i + 1; j < size; j++) {
+                if (compare(j, min) < 0)
                     min= j;
-                }
             }
-            
-            swap(arr, i, min);
+            swap(i, min);
         }
     }
+    
+    // Sorting algorithm 3: Insertion Sort
+    private void insertionSort() {
+        for (int i= 1; i < size; i++) {
+            int value= read(i);
+            int j= i - 1;
 
-    // Sorting algorithm 2: insertion sort
-    private void insertionSort(int n, int[] arr) {
-        for (int i= 1; i < n; i++) {
-            int insert= arr[i];
-            int j= i-1;
-
-            while ((j >= 0) && (arr[j] > insert)) {
-                // inspecting
-                data[0]++;
-                int pointers[]= {j, j+1};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data);  
-                arr[j+1]= arr[j];
-                data[2]++;
+            while ((j >= 0) && (compareV(j, value) > 0)) {
+                insert(j + 1, j);
                 j--; 
-            }  
-            data[0]++;
-            data[2]++;
+            }
 
-            arr[j+1]= insert;
+            insertV(j + 1, value);
         }
     }
 
     // Sorting algorithm 3: quick sort
-    private void quickSort(int n, int[] arr) {
-        quickSortHelper(arr, 0, n-1);
+    private void quickSort() {
+        quickSortHelper(0, size - 1);
+    }
+
+    // Quick sort recursive helper method
+    void quickSortHelper(int low, int high) {
+        if (low < high) {
+            int partitionIndex= partition(low, high);
+            quickSortHelper(low, partitionIndex - 1);
+            quickSortHelper(partitionIndex + 1, high);
+        }
     }
 
     // Partition list for quick sort
-    int partition(int[] arr, int low, int high) {
-        int pivot= arr[high];
+    int partition(int low, int high) {
+        int pivot= read(high);
         int i= low - 1;
-        for (int j= low; j <= high - 1; j++) { 
-            if (arr[j] < pivot) {
+        for (int j= low; j <= high - 1; j++) {  
+            if (compareV(j, pivot) < 0) {
                 i++;
-                swap(arr, i, j);
-            } else {
-                // inspecting
-                data[0]++;
-                int pointers[]= {j, pivot};
-                main.updateUI(arr, pointers, this.n, Constants.INSPECTING, data); 
-            }
+                swap(i, j);
+            } 
         }
-        swap(arr, i + 1, high);
+        swap(i + 1, high);
         return i + 1;
     }
-
-    // quick sort recursive helper method
-    void quickSortHelper(int[] arr, int low, int high) {
-        if (low < high) {
-            int pi= partition(arr, low, high);
-            quickSortHelper(arr, low, pi - 1);
-            quickSortHelper(arr, pi + 1, high);
-        }
-    }
-
+    /* 
     // Sorting algorithm 4: merge sort
     private void mergeSort(int n, int[] arr) {
         mergeSortHelper(arr, 0, n-1);

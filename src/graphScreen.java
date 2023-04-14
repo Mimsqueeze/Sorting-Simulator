@@ -10,8 +10,8 @@ public class GraphScreen {
     Graphics2D graphics;
 
     // Constants based on desired window size
-    public static final int WIDTH= 1240; 
-    public static final int HEIGHT= 620;
+    public static final int WIDTH= 1440; 
+    public static final int HEIGHT= 720;
     public static final int HEADER= 75;
     public static final int BARHEIGHT= HEIGHT - HEADER;
     
@@ -19,6 +19,8 @@ public class GraphScreen {
     private static final Color BARCOLOR= Color.GREEN;
     private static final Color SWAPCOLOR= Color.RED;
     private static final Color COMPARECOLOR= Color.YELLOW;
+    private static final Color INSERTCOLOR= Color.ORANGE;
+    private static final Color READCOLOR= Color.BLUE;
     private static final Color EMPTYCOLOR= Color.BLACK;
 
     // Constants defining the color and size of the UI
@@ -66,12 +68,16 @@ public class GraphScreen {
             graphics.fillRect(i*WIDTH/SIZE, HEADER, (WIDTH/SIZE)+1, BARHEIGHT - (BARHEIGHT*array[i]/SIZE));
         }
         if (mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
-            if (mode == Constants.Mode.COMPARE) { // comparing
+            if (mode == Constants.Mode.COMPARE) { // Comparing
                 graphics.setColor(COMPARECOLOR);
-            } else if (mode == Constants.Mode.SWAP) { // swapping
+            } else if (mode == Constants.Mode.SWAP) { // Swapping
                 graphics.setColor(SWAPCOLOR);
+            } else if (mode == Constants.Mode.INSERT) { // Inserting
+                graphics.setColor(INSERTCOLOR);
+            } else if (mode == Constants.Mode.READ) { // Reading
+                graphics.setColor(READCOLOR);
             }
-            // if sound enabled, split execution to play a sound while updating the highlighted positions
+            // If sound enabled, split execution to play a sound while updating the highlighted positions
             if (main.soundOn) {
                 for (int i= 0; i < pointers.length; i++) {
                     graphics.fillRect(pointers[i]*WIDTH/SIZE, HEIGHT - (BARHEIGHT*array[pointers[i]]/SIZE), (WIDTH/SIZE)+1, HEADER + (BARHEIGHT*array[pointers[i]]/SIZE));
