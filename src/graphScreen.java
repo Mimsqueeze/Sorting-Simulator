@@ -36,8 +36,7 @@ public class GraphScreen {
     // Statistics to be displayed
     private long[] data;
 
-    // Boolean flags used in processing
-    
+    // Render mode
     private Constants.Mode mode;
     
     // graphScreen constructor to create a new frame to render
@@ -107,21 +106,21 @@ public class GraphScreen {
                 "Swaps: "       + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_SWAPS]) + " " +  
                 "Insertions: "  + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_INSERTIONS]), 0, 50);
 
-            if (data[Constants.DATA_INDICES.NUM_TIME] > 0)
-                graphics.drawString("Time (nanoseconds): " + String.format("%,d", data[Constants.DATA_INDICES.NUM_TIME]/(data[Constants.DATA_INDICES.NUM_SIMULATIONS]-1)), 0, 125);
+            // if (data[Constants.DATA_INDICES.NUM_TIME] > 0)
+            //     graphics.drawString("Time (nanoseconds): " + String.format("%,d", data[Constants.DATA_INDICES.NUM_TIME]/(data[Constants.DATA_INDICES.NUM_SIMULATIONS])), 0, 125);
 
         } else {
             // Finished, so display information and render the restart button
             graphics.drawString(
-                "Avg. Comparisons: " + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_COMPARISONS]) + " " + 
-                "Avg. Swaps: "       + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_SWAPS]) + " " +  
-                "Avg. Insertions: "  + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_INSERTIONS]), 0, 50);
+                "Avg. Comparisons: " + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_COMPARISONS] / data[Constants.DATA_INDICES.NUM_SIMULATIONS]) + " " + 
+                "Avg. Swaps: "       + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_SWAPS] / data[Constants.DATA_INDICES.NUM_SIMULATIONS]) + " " +  
+                "Avg. Insertions: "  + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_INSERTIONS] / data[Constants.DATA_INDICES.NUM_SIMULATIONS]), 0, 50);
 
             // Y position of the restart button
             int restartYPosition= 57;
             if (data[Constants.DATA_INDICES.NUM_TIME] > 0) {
                 restartYPosition= 100 - 18;
-                graphics.drawString("Avg. Time (nanoseconds): " + String.format("%,d", data[Constants.DATA_INDICES.NUM_TIME]/(data[Constants.DATA_INDICES.NUM_SIMULATIONS]-1)), 0, 75);
+                graphics.drawString("Avg. Time (nanoseconds): " + String.format("%,d", data[Constants.DATA_INDICES.NUM_TIME] / data[Constants.DATA_INDICES.NUM_SIMULATIONS]), 0, 75);
             }
                 
             // Creates the restart button
