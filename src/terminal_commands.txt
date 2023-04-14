@@ -1,2 +1,0 @@
-if current directory is Sorting-Simulator:          rm src/*.class
-if current directory is Sorting-Simulator\src:      rm *.class
