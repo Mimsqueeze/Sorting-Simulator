@@ -169,7 +169,7 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_SWAPS]++;
 
         // Update the screen before the swap
-        if (show)
+        if (show && !graphScreen.speedUp)
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
 
         // Swap the elements
@@ -194,7 +194,7 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
 
         // Update the screen
-        if (show)
+        if (show && !graphScreen.speedUp)
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
 
         // Returns 0 if equal, -1 if arr[a] is less than arr[b], 1 if arr[a] is greater than arr[b]
@@ -210,7 +210,7 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
 
         // Update the screen
-        if (show)
+        if (show && !graphScreen.speedUp)
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
 
         // Returns 0 if equal, -1 if arr[a] is less than arr[b], 1 if arr[a] is greater than arr[b]
@@ -258,7 +258,7 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_READS]++;
 
         // Update the screen
-        if (show)
+        if (show && !graphScreen.speedUp)
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.READ);
 
         // Returns value at index a

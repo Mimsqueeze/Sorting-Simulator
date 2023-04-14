@@ -8,6 +8,9 @@ public class GraphScreen {
 
     // Reference to Graphics2D used by Main
     Graphics2D graphics;
+
+    // Debugging: Speed up option
+    boolean speedUp= true;
     
     // Constants defining the color of the graph
     private static final Color BARCOLOR= Color.GREEN;
