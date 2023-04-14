@@ -33,6 +33,9 @@ public class GraphScreen {
     // The size of the array to be visualized
     private int SIZE;
 
+    // Largest element of the array for scaling rectangles
+    private int LARGEST;
+
     // The array of positions to be highlighted
     private int[] pointers= new int[0];
 
@@ -108,10 +111,6 @@ public class GraphScreen {
                 "Comparisons: " + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_COMPARISONS]) + " " + 
                 "Swaps: "       + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_SWAPS]) + " " +  
                 "Insertions: "  + String.format("%.2f", (double) data[Constants.DATA_INDICES.NUM_INSERTIONS]), 0, 50);
-
-            // if (data[Constants.DATA_INDICES.NUM_TIME] > 0)
-            //     graphics.drawString("Time (nanoseconds): " + String.format("%,d", data[Constants.DATA_INDICES.NUM_TIME]/(data[Constants.DATA_INDICES.NUM_SIMULATIONS])), 0, 125);
-
         } else {
             // Finished, so display information and render the restart button
             graphics.drawString(

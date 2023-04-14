@@ -23,6 +23,7 @@ public final class Constants {
         public static final String HEAP= "Heap Sort";
         public static final String INTRO= "Intro Sort";
         public static final String BOZO= "Bozo Sort";
+        public static final String CUSTOM= "CUSTOM";
     }
 
     // Class to store indices of data

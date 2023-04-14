@@ -7,8 +7,7 @@ import java.awt.geom.Point2D;
 public class Main {
 
     /* Array for all the sorting algorithms our program can simulate (also is 
-     * used for the dropdown menu to select the sorting algorithm)
-     */
+     * used for the dropdown menu to select the sorting algorithm) */
     public final String[] sortingAlgs = {
         Constants.SORTING_ALG_NAMES.BUBBLE,
         Constants.SORTING_ALG_NAMES.SELECTION,
@@ -17,7 +16,8 @@ public class Main {
         Constants.SORTING_ALG_NAMES.MERGE,
         Constants.SORTING_ALG_NAMES.HEAP,
         Constants.SORTING_ALG_NAMES.INTRO,
-        Constants.SORTING_ALG_NAMES.BOZO
+        Constants.SORTING_ALG_NAMES.BOZO,
+        Constants.SORTING_ALG_NAMES.CUSTOM
     };
     JFrame frame;
     JPanel panel;

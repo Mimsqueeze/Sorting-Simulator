@@ -1,7 +1,6 @@
 import java.util.LinkedList;
 
-public class Sim {
-
+class Sim {
     // Store reference to the GraphScreen
     private GraphScreen graphScreen;
 
@@ -129,6 +128,8 @@ public class Sim {
             introSort();
         } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.BOZO)) {
             bozoSort();
+        } else {
+            CustomSim.customSort(this, size);
         }
     }
 
@@ -161,7 +162,7 @@ public class Sim {
     }
 
     // Swaps elements at indices a and b and updates graphScreen
-    private boolean swap(int a, int b) {
+    public boolean swap(int a, int b) {
         // Create array of pointers
         int pointers[]= {a, b};
 
@@ -186,7 +187,7 @@ public class Sim {
     }
     
     // Compares the elements at indices a and b and updates graphScreen
-    private int compare(int a, int b) {
+    public int compare(int a, int b) {
         // Create array of pointers
         int pointers[]= {a, b};
 
@@ -202,7 +203,7 @@ public class Sim {
     }
 
     // Compares the element at indices a and value v and updates graphScreen
-    private int compareV(int a, int v) {
+    public int compareV(int a, int v) {
         // Create array of pointers
         int pointers[]= {a};
 
@@ -218,7 +219,7 @@ public class Sim {
     }
 
     // Insert the element at index b into index a and updates graphScreen
-    private void insert(int a, int b) {
+    public void insert(int a, int b) {
         // Create array of pointers
         int pointers[]= {a, b};
 
@@ -234,7 +235,7 @@ public class Sim {
     }
 
     // Insert the value v into index a and updates graphScreen
-    private void insertV(int a, int v) {
+    public void insertV(int a, int v) {
         // Create array of pointers
         int pointers[]= {a};
 
@@ -250,7 +251,7 @@ public class Sim {
     }
 
     // Reads the value at index a, updates graphScreen, and returns the value
-    private int read(int a) {
+    public int read(int a) {
         // Create array of pointers
         int pointers[]= {a};
 
