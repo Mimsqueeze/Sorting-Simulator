@@ -146,8 +146,5 @@ public class GraphScreen {
         this.data= data;        
         this.mode= mode;
         render();
-        try {
-            Thread.sleep(4);
-         } catch (InterruptedException e) { }
     }
 }
