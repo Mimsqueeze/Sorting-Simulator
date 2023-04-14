@@ -13,7 +13,7 @@ public class Main {
     {
         "Bubble Sort", "Selection Sort", "Insertion Sort", 
         "Quick Sort", "Merge Sort", "Heap Sort", 
-        "Intro Sort", "Bogo Sort"
+        "Intro Sort", "Bozo Sort"
     };
     JFrame frame;
     JPanel panel;
@@ -44,7 +44,7 @@ public class Main {
     public void start() {
         panel.removeAll();
         panel.setLayout(new GridLayout(20, 2));
-        panel.setPreferredSize(new Dimension(GraphScreen.WIDTH, GraphScreen.HEIGHT));
+        panel.setPreferredSize(new Dimension(Constants.SCREEN_SIZES.WIDTH, Constants.SCREEN_SIZES.HEIGHT));
         frame.setContentPane(panel);
 
         title = new JLabel("Sorting Algorithm Simulator");
@@ -119,7 +119,7 @@ public class Main {
     private void runClick() {
         panel.removeAll();
         panel.getGraphics().setColor(Color.BLACK);
-        panel.getGraphics().fillRect(0, 0, GraphScreen.WIDTH, GraphScreen.HEIGHT);
+        panel.getGraphics().fillRect(0, 0, Constants.SCREEN_SIZES.WIDTH, Constants.SCREEN_SIZES.HEIGHT);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
