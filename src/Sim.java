@@ -1,7 +1,6 @@
 import java.util.LinkedList;
 
 public class Sim {
-    private Main main;
     private GraphScreen graphScreen;
     private int size;
     private String algorithm;
@@ -9,8 +8,7 @@ public class Sim {
     private int[] arr;
     private long[] data= new long[]{0, 0, 0, 0, 0};
 
-    public Sim (Main main, GraphScreen graphScreen, int size, String algorithm, int numSimulations) {
-        this.main= main;
+    public Sim (GraphScreen graphScreen, int size, String algorithm, int numSimulations) {
         this.graphScreen= graphScreen;
         this.size= size;
         this.algorithm= algorithm;

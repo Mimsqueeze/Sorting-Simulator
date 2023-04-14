@@ -45,14 +45,14 @@ public class GraphScreen {
     private Constants.Mode mode;
     
     // graphScreen constructor to create a new frame to render
-    GraphScreen(Main main, Graphics2D graphics, int size) {
+    GraphScreen(Main main, int size) {
         this.main= main;
-        this.graphics= graphics;
         this.SIZE= size;
     }
 
     // Function called to render each frame of the graph
     public void render() {
+        this.graphics= (Graphics2D) main.panel.getGraphics();
 
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {

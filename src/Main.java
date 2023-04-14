@@ -134,10 +134,10 @@ public class Main {
         this.soundOn = soundCheckBox.isSelected();
 
         // Create a new Graph Screen to be displayed
-        graphScreen = new GraphScreen(this, (Graphics2D) panel.getGraphics(), size);
+        graphScreen = new GraphScreen(this, size);
 
         // Create a new Simulation to be ran
-        Sim newSimulation = new Sim(this, graphScreen, size, algorithm, numSims);
+        Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims);
         newSimulation.runSimulation();
     }
 
