@@ -26,7 +26,7 @@ public class Main {
     JButton exit;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
     Font titleFont = new Font("Courier New", Font.BOLD, 35);
-    graphScreen s;
+    GraphScreen graphScreen;
     JLabel title;
     JLabel algorithmText;
     JLabel sizeText;
@@ -44,7 +44,7 @@ public class Main {
     public void start() {
         panel.removeAll();
         panel.setLayout(new GridLayout(20, 2));
-        panel.setPreferredSize(new Dimension(graphScreen.WIDTH, graphScreen.HEIGHT));
+        panel.setPreferredSize(new Dimension(GraphScreen.WIDTH, GraphScreen.HEIGHT));
         frame.setContentPane(panel);
 
         title = new JLabel("Sorting Algorithm Simulator");
@@ -119,22 +119,26 @@ public class Main {
     private void runClick() {
         panel.removeAll();
         panel.getGraphics().setColor(Color.BLACK);
-        panel.getGraphics().fillRect(0, 0, graphScreen.WIDTH, graphScreen.HEIGHT);
+        panel.getGraphics().fillRect(0, 0, GraphScreen.WIDTH, GraphScreen.HEIGHT);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Point2D click = e.getPoint();
-                s.onClick((int) click.getX(), (int) click.getY());
+                graphScreen.onClick((int) click.getX(), (int) click.getY());
             }
         });
         int size = Integer.parseInt(sizeInput.getText());
         String algorithm = (String) dropDown.getSelectedItem();
         int numSims = Integer.parseInt(simInput.getText());
-        Sim newSimulation = new Sim();
         boolean showSimulations = everyCheckBox.isSelected();
         this.soundOn = soundCheckBox.isSelected();
-        s = new graphScreen(this, size);
-        newSimulation.runSimulation(this, size, algorithm, numSims, showSimulations);
+
+        // Create a new Graph Screen to be displayed
+        graphScreen = new GraphScreen(this, (Graphics2D) panel.getGraphics(), size);
+
+        // Create a new Simulation to be ran
+        Sim newSimulation = new Sim(this, graphScreen, size, algorithm, numSims);
+        newSimulation.runSimulation();
     }
 
     private static void runGUI() {
@@ -147,24 +151,5 @@ public class Main {
                 runGUI();
             }
         });
-    }
-    // if inspecting = true, pointers are for inspecting the element
-    // if false, pointers are for swapping
-    // data[0] is num comparisons, data[1] is num swaps, data[3] is number of insertions
-    public void updateUI(int[] array, int[] pointers, int size, State state, int[] data) {
-        s.updateInformation(array, pointers, state);
-
-        if (data != null) {
-            s.setBox(data);
-        }
-        s.render((Graphics2D) panel.getGraphics());
-    }
-    public void finish(int[] array, int size, int[] data, int numSims, long time) {
-        //s = new graphScreen(this);
-        // s.setArray(array, size);
-        s.setArrays(array, null, size, State.NEITHER);
-        s.setBox(data);
-        s.setFinish(numSims, time);
-        s.render((Graphics2D) panel.getGraphics());
     }
 }
