@@ -4,20 +4,20 @@ public class Sim {
     private GraphScreen graphScreen;
     private int size;
     private String algorithm;
-    private int numSimulations;
+    private int totalSimulations;
     private int[] arr;
     private long[] data= new long[Constants.DATA_SIZE];
 
-    public Sim (GraphScreen graphScreen, int size, String algorithm, int numSimulations) {
+    public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations) {
         this.graphScreen= graphScreen;
         this.size= size;
         this.algorithm= algorithm;
-        this.numSimulations= numSimulations;
+        this.totalSimulations= totalSimulations;
     }
 
     public void runSimulation() {
         // Variables to track running time
-        long totalSortingTime= 0, finish, start;
+        long finish, start;
 
         // Integer array to store array to be sorted
         arr= new int[size];
