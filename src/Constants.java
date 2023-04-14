@@ -13,6 +13,17 @@ public final class Constants {
         public static final int BARHEIGHT= HEIGHT - HEADER;
     }
 
+    // Class to store sorting algorithm names
+    public final static class SORTING_ALG_NAMES {
+        public static final String BUBBLE= "Bubble Sort";
+        public static final String SELECTION= "Selection Sort";
+        public static final String INSERTION= "Insertion Sort"; 
+        public static final String QUICK= "Quick Sort";
+        public static final String MERGE= "Merge Sort";
+        public static final String HEAP= "Heap Sort";
+        public static final String INTRO= "Intro Sort";
+        public static final String BOZO= "Bozo Sort";
+    }
 
     // Class to store indices of data
     public final static class DATA_INDICES {

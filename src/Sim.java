@@ -1,80 +1,146 @@
 import java.util.LinkedList;
 
 public class Sim {
+
+    // Store reference to the GraphScreen
     private GraphScreen graphScreen;
+
+    // Store size of array
     private int size;
-    private String algorithm;
-    private int totalSimulations;
+
+    // Store the array to be sorted
     private int[] arr;
+
+    // Store the algorithm
+    private String algorithm;
+
+    // Store the total number of simulations
+    private int totalSimulations;
+
+    // Store the data
     private long[] data= new long[Constants.DATA_INDICES.DATA_SIZE];
 
-    public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations) {
+    // Store whether to show all simulations or not
+    private boolean show;
+
+    // Sim constructor
+    public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations, boolean show) {
         this.graphScreen= graphScreen;
         this.size= size;
         this.algorithm= algorithm;
         this.totalSimulations= totalSimulations;
+        this.show= show;
     }
 
     public void runSimulation() {
         // Variables to track running time
-        long finish, start;
+        long start, finish;
 
         // Integer array to store array to be sorted
         arr= new int[size];
 
-        // Randomizes the array's elements
-        randomizeArray();
-
         // Update and Render the Graph Screen
         graphScreen.updateRender(arr, null, data, Constants.Mode.DEFAULT);
 
-        /*
+        // Split execution based on whether to show all simulations
         if (show) {
-            for (int i= 0; i < numSims - 1; i++) {
-                arr= createArray(n);
-                bubbleSort(n, arr);
+            // Goes here if show all simulations
+            for (int i= 1; i <= totalSimulations; i++) {
+
+                // Randomize the array
+                randomizeArray();
+
+                // Update the simulation number
+                data[Constants.DATA_INDICES.NUM_SIMULATIONS]= i;
+
+                // Start tracking time and begin sorting
+                start= System.nanoTime();
+                sort();
+                finish= System.nanoTime();
+
+                // Update the time
+                data[Constants.DATA_INDICES.NUM_TIME] += finish - start;
+
+                // Update the graph screen
+                graphScreen.updateRender(arr, null, data, Constants.Mode.DEFAULT);
             }
         } else {
-            for (int i= 0; i < numSims - 1; i++) {
-                arr= createArray(n);
+            // Goes here if don't show all simulations
+
+            // Sets show to true for a single simulation to be displayed
+            show= true;
+
+            // Randomize the array
+            randomizeArray();
+
+            // Update the Simulation Number
+            data[Constants.DATA_INDICES.NUM_SIMULATIONS]= 1;
+
+            // Sort the array
+            sort();
+
+            // Update the graph screen
+            graphScreen.updateRender(arr, null, data, Constants.Mode.DEFAULT);
+
+            // Turn show to off
+            show= false;
+            
+            // Refresh the data array
+            data= new long[Constants.DATA_INDICES.DATA_SIZE];
+
+            // Run totalSimulations without displaying
+            for (int i= 1; i <= totalSimulations; i++) {
+
+                // Randomize the array
+                randomizeArray();
+
+                // Start tracking time and begin sorting
                 start= System.nanoTime();
-                _bubbleSort(n, arr);
+                sort();
                 finish= System.nanoTime();
-                totalSortingTime += finish - start;
+
+                // Update the time
+                data[Constants.DATA_INDICES.NUM_TIME] += finish - start;
             }
         }
-        */
 
-        // Find correct sorting algorithm and execute it
-        if (algorithm.equals("Bubble Sort")) {
-            bubbleSort();
-        } else if (algorithm.equals("Selection Sort")) {
-            selectionSort();
-        } else if (algorithm.equals("Insertion Sort")) {
-            insertionSort();
-        } else if (algorithm.equals("Quick Sort")) {
-            quickSort();
-        } else if (algorithm.equals("Merge Sort")) {
-            mergeSort();
-        } else if (algorithm.equals("Heap Sort")) {
-            heapSort();
-        } else if (algorithm.equals("Intro Sort")) {
-            introSort();
-        } else if (algorithm.equals("Bozo Sort")) {
-            bozoSort();
-        }
+        // Update NUM_SIMULTATIONS
+        data[Constants.DATA_INDICES.NUM_SIMULATIONS]= totalSimulations;
 
         // Update and Render the Graph Screen with mode FINISH
         graphScreen.updateRender(arr, null, data, Constants.Mode.FINISH);
     }
 
-    // Helper function to print array
+    // Finds the correct sorting algorithm and executes it
+    private void sort() {
+        if (algorithm.equals(Constants.SORTING_ALG_NAMES.BUBBLE)) {
+            bubbleSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.SELECTION)) {
+            selectionSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.INSERTION)) {
+            insertionSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.QUICK)) {
+            quickSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.MERGE)) {
+            mergeSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.HEAP)) {
+            heapSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.INTRO)) {
+            introSort();
+        } else if (algorithm.equals(Constants.SORTING_ALG_NAMES.BOZO)) {
+            bozoSort();
+        }
+    }
+
+    /* 
+    // Optional Helper function to print array
     private void printArray() {
         for (int elt : arr)
             System.out.print(elt + " ");
 
         System.out.println(); 
     }
+    */
 
     // Creates array of size 1 to n, with elements of length 1 to n
     private void randomizeArray() {
@@ -103,7 +169,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_SWAPS]++;
 
         // Update the screen before the swap
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
 
         // Swap the elements
         int temp= arr[a];
@@ -111,7 +178,8 @@ public class Sim {
         arr[b]= temp;
 
         // Update the screen after the swap
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
 
         // Return true as in swap successful
         return true;
@@ -126,7 +194,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
 
         // Update the screen
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
 
         // Returns 0 if equal, -1 if arr[a] is less than arr[b], 1 if arr[a] is greater than arr[b]
         return (arr[a] == arr[b]) ? (0) : ((arr[a] < arr[b]) ? (-1) : (1));
@@ -141,7 +210,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_COMPARISONS]++;
 
         // Update the screen
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.COMPARE);
 
         // Returns 0 if equal, -1 if arr[a] is less than arr[b], 1 if arr[a] is greater than arr[b]
         return (arr[a] == v) ? (0) : ((arr[a] < v) ? (-1) : (1));
@@ -156,7 +226,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_INSERTIONS]++;
 
         // Update the screen
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
 
         // Copies value in b into a
         arr[a]= arr[b];
@@ -171,7 +242,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_INSERTIONS]++;
 
         // Update the screen
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.INSERT);
 
         // Copies value v into a
         arr[a]= v;
@@ -186,7 +258,8 @@ public class Sim {
         data[Constants.DATA_INDICES.NUM_READS]++;
 
         // Update the screen
-        graphScreen.updateRender(arr, pointers, data, Constants.Mode.READ);
+        if (show)
+            graphScreen.updateRender(arr, pointers, data, Constants.Mode.READ);
 
         // Returns value at index a
         return arr[a];

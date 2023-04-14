@@ -9,11 +9,15 @@ public class Main {
     /* Array for all the sorting algorithms our program can simulate (also is 
      * used for the dropdown menu to select the sorting algorithm)
      */
-    public final String[] sortingAlgs = 
-    {
-        "Bubble Sort", "Selection Sort", "Insertion Sort", 
-        "Quick Sort", "Merge Sort", "Heap Sort", 
-        "Intro Sort", "Bozo Sort"
+    public final String[] sortingAlgs = {
+        Constants.SORTING_ALG_NAMES.BUBBLE,
+        Constants.SORTING_ALG_NAMES.SELECTION,
+        Constants.SORTING_ALG_NAMES.INSERTION,
+        Constants.SORTING_ALG_NAMES.QUICK,
+        Constants.SORTING_ALG_NAMES.MERGE,
+        Constants.SORTING_ALG_NAMES.HEAP,
+        Constants.SORTING_ALG_NAMES.INTRO,
+        Constants.SORTING_ALG_NAMES.BOZO
     };
     JFrame frame;
     JPanel panel;
@@ -137,7 +141,7 @@ public class Main {
         graphScreen = new GraphScreen(this, size);
 
         // Create a new Simulation to be ran
-        Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims);
+        Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims, showSimulations);
         newSimulation.runSimulation();
     }
 
