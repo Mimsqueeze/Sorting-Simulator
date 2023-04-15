@@ -10,7 +10,7 @@ public class GraphScreen {
     Graphics2D graphics;
 
     // Debugging: Speed up option
-    boolean speedUp= true;
+    boolean speedUp= false;
     
     // Constants defining the color of the graph
     private static final Color BARCOLOR= Color.GREEN;
@@ -49,6 +49,16 @@ public class GraphScreen {
     GraphScreen(Main main, int size) {
         this.main= main;
         this.SIZE= size;
+        this.LARGEST= size;
+    }
+
+    // Sets the size
+    public void setSize(int size) {
+        SIZE= size;
+    }
+
+    public void setLargest(int largest) {
+        LARGEST= largest;
     }
 
     // Function called to render each frame of the graph
@@ -59,11 +69,11 @@ public class GraphScreen {
 
             // Fill the bar
             graphics.setColor(BARCOLOR);
-            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE));
+            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/LARGEST), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/LARGEST));
            
             // Fill space above the bar
             graphics.setColor(EMPTYCOLOR);
-            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEADER, (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.BARHEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/SIZE));
+            graphics.fillRect(i*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEADER, (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.BARHEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[i]/LARGEST));
         }
         if (mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
             if (mode == Constants.Mode.COMPARE) { // Comparing

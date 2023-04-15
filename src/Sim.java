@@ -1,4 +1,9 @@
 import java.util.LinkedList;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 class Sim {
     // Store reference to the GraphScreen
@@ -19,15 +24,19 @@ class Sim {
     // Store the data
     private long[] data= new long[Constants.DATA_INDICES.DATA_SIZE];
 
+    // Store whether to use a custom data set provided by data.txt
+    private boolean customData;
+
     // Store whether to show all simulations or not
     private boolean show;
 
     // Sim constructor
-    public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations, boolean show) {
+    public Sim (GraphScreen graphScreen, int size, String algorithm, int totalSimulations, boolean customDataSet, boolean show) {
         this.graphScreen= graphScreen;
         this.size= size;
         this.algorithm= algorithm;
         this.totalSimulations= totalSimulations;
+        this.customData= customDataSet;
         this.show= show;
     }
 
@@ -47,7 +56,7 @@ class Sim {
             for (int i= 1; i <= totalSimulations; i++) {
 
                 // Randomize the array
-                randomizeArray();
+                createArray();
 
                 // Update the simulation number
                 data[Constants.DATA_INDICES.NUM_SIMULATIONS]= i;
@@ -70,7 +79,7 @@ class Sim {
             show= true;
 
             // Randomize the array
-            randomizeArray();
+            createArray();
 
             // Update the Simulation Number
             data[Constants.DATA_INDICES.NUM_SIMULATIONS]= 1;
@@ -91,7 +100,7 @@ class Sim {
             for (int i= 1; i <= totalSimulations; i++) {
 
                 // Randomize the array
-                randomizeArray();
+                createArray();
 
                 // Start tracking time and begin sorting
                 start= System.nanoTime();
@@ -143,7 +152,38 @@ class Sim {
     }
     */
 
-    // Creates array of size 1 to n, with elements of length 1 to n
+    // Creates an array
+    private void createArray() {
+        if (customData) {
+            FileReader fr= null;
+            try {
+                fr= new FileReader("data.txt");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+            
+            Scanner scan = new Scanner(fr);
+
+            size= scan.nextInt();
+            graphScreen.setSize(size);
+
+            arr= new int[size];
+            
+            int largest= -1;
+            for (int i= 0; i < size; i++) {
+                arr[i]= scan.nextInt();
+                if (arr[i] > largest)
+                    largest= arr[i];
+            }
+
+            graphScreen.setLargest(largest);
+
+            scan.close();            
+        } else
+            randomizeArray();
+    }
+    // Creates a random array of size 1 to n, with elements of length 1 to n
     private void randomizeArray() {
 
         // Creates a LinkedList to store numbers to add into arr

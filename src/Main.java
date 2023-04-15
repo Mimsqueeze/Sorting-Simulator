@@ -26,6 +26,7 @@ public class Main {
     JTextField simInput = new JTextField();
     JCheckBox everyCheckBox = new JCheckBox();
     JCheckBox soundCheckBox = new JCheckBox();
+    JCheckBox customCheckBox = new JCheckBox();
     JButton run;
     JButton exit;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
@@ -35,6 +36,7 @@ public class Main {
     JLabel algorithmText;
     JLabel sizeText;
     JLabel simText; 
+    JLabel customText;
     JLabel everyText;
     JLabel soundText;
     boolean soundOn;
@@ -47,7 +49,7 @@ public class Main {
     }
     public void start() {
         panel.removeAll();
-        panel.setLayout(new GridLayout(20, 2));
+        panel.setLayout(new GridLayout(25, 1));
         panel.setPreferredSize(new Dimension(Constants.SCREEN_SIZES.WIDTH, Constants.SCREEN_SIZES.HEIGHT));
         frame.setContentPane(panel);
 
@@ -69,7 +71,7 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        sizeText = new JLabel("Enter Size (1 - 1200)");
+        sizeText = new JLabel("Enter Size");
         sizeText.setFont(myFont);
         sizeText.setForeground(Color.green);
         panel.add(sizeText);
@@ -79,13 +81,21 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        simText = new JLabel("Enter Number of Simulations (1 - 10000)");
+        simText = new JLabel("Enter Number of Simulations");
         simText.setFont(myFont);
         simText.setForeground(Color.green);
         panel.add(simText);
 
         simInput.setFont(myFont);
         panel.add(simInput);
+
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        customText = new JLabel("Use Custom Dataset");
+        customText.setFont(myFont);
+        customText.setForeground(Color.green);
+        panel.add(customText);
+        panel.add(customCheckBox);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
@@ -97,7 +107,7 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        soundText = new JLabel("Sound (Slows Processing Significantly)");
+        soundText = new JLabel("Sound");
         soundText.setFont(myFont);
         soundText.setForeground(Color.green);
         panel.add(soundText);
@@ -135,13 +145,14 @@ public class Main {
         String algorithm = (String) dropDown.getSelectedItem();
         int numSims = Integer.parseInt(simInput.getText());
         boolean showSimulations = everyCheckBox.isSelected();
+        boolean customDataSet = customCheckBox.isSelected();
         this.soundOn = soundCheckBox.isSelected();
 
         // Create a new Graph Screen to be displayed
         graphScreen = new GraphScreen(this, size);
 
         // Create a new Simulation to be ran
-        Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims, showSimulations);
+        Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims, customDataSet, showSimulations);
         newSimulation.runSimulation();
     }
 
