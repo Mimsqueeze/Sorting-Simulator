@@ -47,7 +47,6 @@ public class GraphScreen {
 
     // Whether of not to wait for click to continue next step
     private boolean wait;
-    
     // graphScreen constructor to create a new frame to render
     GraphScreen(Main main, int size, boolean wait) {
         this.main= main;
@@ -68,8 +67,8 @@ public class GraphScreen {
 
     // Function called to render each frame of the graph
     public void render() {
-            
         this.graphics= (Graphics2D) main.panel.getGraphics();
+        
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
 
