@@ -27,6 +27,7 @@ public class Main {
     JCheckBox everyCheckBox = new JCheckBox();
     JCheckBox soundCheckBox = new JCheckBox();
     JCheckBox customCheckBox = new JCheckBox();
+    JCheckBox waitCheckBox = new JCheckBox();
     JButton run;
     JButton exit;
     Font myFont = new Font("Courier New", Font.BOLD, 25);
@@ -39,6 +40,7 @@ public class Main {
     JLabel customText;
     JLabel everyText;
     JLabel soundText;
+    JLabel waitText;
     boolean soundOn;
     Main() {
         frame = new JFrame("Sorting Simulator");
@@ -99,6 +101,14 @@ public class Main {
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
+        waitText = new JLabel("Wait For Click To Continue");
+        waitText.setFont(myFont);
+        waitText.setForeground(Color.green);
+        panel.add(waitText);
+        panel.add(waitCheckBox);
+
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
+
         everyText = new JLabel("Show Every Simulation");
         everyText.setFont(myFont);
         everyText.setForeground(Color.green);
@@ -146,10 +156,11 @@ public class Main {
         int numSims = Integer.parseInt(simInput.getText());
         boolean showSimulations = everyCheckBox.isSelected();
         boolean customDataSet = customCheckBox.isSelected();
+        boolean waitForClick = waitCheckBox.isSelected();
         this.soundOn = soundCheckBox.isSelected();
 
         // Create a new Graph Screen to be displayed
-        graphScreen = new GraphScreen(this, size);
+        graphScreen = new GraphScreen(this, size, waitForClick);
 
         // Create a new Simulation to be ran
         Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims, customDataSet, showSimulations);

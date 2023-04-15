@@ -44,25 +44,31 @@ public class GraphScreen {
 
     // Render mode
     private Constants.Mode mode;
+
+    // Whether of not to wait for click to continue next step
+    private boolean wait;
     
     // graphScreen constructor to create a new frame to render
-    GraphScreen(Main main, int size) {
+    GraphScreen(Main main, int size, boolean wait) {
         this.main= main;
         this.SIZE= size;
         this.LARGEST= size;
+        this.wait= wait;
     }
 
-    // Sets the size
+    // Sets the size of the array
     public void setSize(int size) {
         SIZE= size;
     }
 
+    // Sets the largest element of the array
     public void setLargest(int largest) {
         LARGEST= largest;
     }
 
     // Function called to render each frame of the graph
     public void render() {
+            
         this.graphics= (Graphics2D) main.panel.getGraphics();
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
@@ -144,7 +150,6 @@ public class GraphScreen {
 
     // Function is called when user clicks on the screen
     public void onClick(int x, int y) {
-
         // If the restart button is clicked, then go back to main menu screen
         if (restart.contains((double) x, (double) y))
             main.start();
