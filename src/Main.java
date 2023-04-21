@@ -153,7 +153,7 @@ public class Main {
         // Adds action listeners to the buttons 
         run.addActionListener(e -> runClick());
         exit.addActionListener(e -> exitClick());
-
+        
         frame.pack();
         frame.setVisible(true);
     }
@@ -187,10 +187,10 @@ public class Main {
         boolean customDataSet = customCheckBox.isSelected();
         boolean waitForClick = waitCheckBox.isSelected();
         this.soundOn = soundCheckBox.isSelected();
-
+        
         // Create a new Graph Screen to be displayed
         graphScreen = new GraphScreen(this, size, waitForClick);
-
+        
         // Create a new Simulation to be ran
         Sim newSimulation = new Sim(graphScreen, size, algorithm, numSims, customDataSet, showSimulations);
         newSimulation.runSimulation();

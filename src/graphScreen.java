@@ -1,5 +1,9 @@
 import java.awt.*;
+import java.awt.Desktop.Action;
+import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.AbstractAction;
 
 public class GraphScreen {
 
@@ -64,11 +68,19 @@ public class GraphScreen {
     public void setLargest(int largest) {
         LARGEST= largest;
     }
-
+    
     // Function called to render each frame of the graph
     public void render() {
         this.graphics= (Graphics2D) main.panel.getGraphics();
-        
+        if (wait) {
+            WaitThread w = new WaitThread(main);
+            w.start();
+            try {
+                w.join();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
 
@@ -150,7 +162,7 @@ public class GraphScreen {
     // Function is called when user clicks on the screen
     public void onClick(int x, int y) {
         // If the restart button is clicked, then go back to main menu screen
-        if (restart.contains((double) x, (double) y))
+        if (mode == Constants.Mode.FINISH && restart.contains((double) x, (double) y))
             main.start();
     }
 
