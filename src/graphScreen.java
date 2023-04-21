@@ -72,15 +72,15 @@ public class GraphScreen {
     // Function called to render each frame of the graph
     public void render() {
         this.graphics= (Graphics2D) main.panel.getGraphics();
-        if (wait) {
-            WaitThread w = new WaitThread(main);
-            w.start();
-            try {
-                w.join();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        // if (wait) {
+        //     WaitThread w = new WaitThread();
+        //     w.start();
+        //     try {
+        //         w.join();
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //     }
+        // }
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
 
