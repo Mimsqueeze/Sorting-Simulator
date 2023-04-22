@@ -1,5 +1,4 @@
 import java.io.FileWriter;
-import java.io.IOException;
 
 public class DataGenerator {
     public static void main(String[] args) {

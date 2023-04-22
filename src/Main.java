@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.RenderingHints.Key;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -22,6 +19,7 @@ public class Main {
         Constants.SORTING_ALG_NAMES.BOZO,
         Constants.SORTING_ALG_NAMES.CUSTOM
     };
+    
     // All the Java Swing components used for the simulation 
     JFrame frame;
     JPanel panel;
@@ -44,10 +42,14 @@ public class Main {
     JLabel everyText;
     JLabel soundText;
     JLabel waitText;
+
     // GraphScreen object to visualize the sorting algorithm 
     GraphScreen graphScreen;
+
     // Boolean for whether or not the sound is turned on 
     boolean soundOn;
+
+    // Main constructor
     Main() {
         frame = new JFrame("Sorting Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -157,9 +159,11 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
     }
+    
     private void exitClick() {
         System.exit(0);
     }
+
     private void runClick() {
         // Removes all components of the panel (buttons, textfields, etc)
         panel.removeAll();
@@ -196,10 +200,13 @@ public class Main {
         newSimulation.runSimulation();
     }
 
+    // Starts the GUI by creating a new instance of Main
     private static void runGUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-        Main drive = new Main();
+        new Main();
     }
+
+    // main method runs when program starts
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
