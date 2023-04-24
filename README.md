@@ -12,7 +12,7 @@ When you start running the program, you will see a menu with the title "Sorting 
 | --- | --- |
 | Sorting Algorithm | Choose from the dropdown menu of the sorting algorithms to be simulated |
 | Enter Size | Enter the size of the array to be sorted |
-| Enter Number of Simulations | Enter the number of simulations to perform. If this is >1, then displaying simulations is skipped unless Show Every Simulation is checked |
+| Enter Number of Simulations | Enter the number of simulations to perform. If this is >1, then displaying simulations is skipped unless "Show Every Simulation" is checked |
 | Use Custom Data | If checked, uses the custom dataset from data.txt as the array to be sorted |
 | Wait For Click To Continue | If checked, simulation only runs when user inputs the [ENTER] key in terminal |
 | Show Every Simulation | If checked, every simulation from "Enter Number of Simulations" is displayed |
