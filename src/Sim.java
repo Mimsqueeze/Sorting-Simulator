@@ -528,11 +528,9 @@ class Sim {
     }
 
     private void introSortQuickSort(int begin, int end, int depthLimit) {
-        /*
         // Optional Median-Of-Three method for choosing pivots
         int pivot= introSortFindPivot(begin, begin + ((end - begin) / 2) + 1, end);
         swap(pivot, end);
-        */
 
         int p= partition(begin, end); // Uses partition from Quick Sort
 
@@ -540,7 +538,6 @@ class Sim {
         introSortHelper(p + 1, end, depthLimit);
     }
 
-    /*
     // Optional method: Median-Of-Three for choosing pivot for Intro Sort
     private int introSortFindPivot(int a1, int b1, int c1) {
         int max= Math.max(Math.max(arr[a1], arr[b1]), arr[c1]);
@@ -552,7 +549,6 @@ class Sim {
             return b1;
         return c1;
     }
-    */
  
     // Sorting algorithm 8: Bozo Sort
     private void bozoSort() {

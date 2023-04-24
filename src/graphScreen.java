@@ -11,7 +11,8 @@ public class GraphScreen {
     Graphics2D graphics;
 
     // Debugging: Speed up option
-    boolean speedUp= false;
+    // boolean speedUp= false;
+    boolean speedUp= true;
     
     // Constants defining the color of the graph
     private static final Color BARCOLOR= Color.GREEN;

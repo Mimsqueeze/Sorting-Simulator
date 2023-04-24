@@ -23,7 +23,7 @@ public class Main {
     // All the Java Swing components used for the simulation 
     JFrame frame;
     JPanel panel;
-    JComboBox<String> dropDown;
+    JComboBox<String> dropDown = new JComboBox<>(sortingAlgs);
     JTextField sizeInput = new JTextField();
     JTextField simInput = new JTextField();
     JCheckBox everyCheckBox = new JCheckBox();
@@ -79,7 +79,6 @@ public class Main {
         algorithmText.setFont(myFont);
         algorithmText.setForeground(Color.green);
         panel.add(algorithmText);
-        dropDown = new JComboBox<>(sortingAlgs);
         dropDown.setFont(myFont);
         panel.add(dropDown);
 
@@ -165,6 +164,28 @@ public class Main {
     }
 
     private void runClick() {
+
+        // Gets all the information inputted by the user
+        int size;
+        String algorithm;
+        int numSims;
+        boolean showSimulations;
+        boolean customDataSet;
+        boolean waitForClick;
+
+        try {
+            size = Integer.parseInt(sizeInput.getText());
+            algorithm = (String) dropDown.getSelectedItem();
+            numSims = Integer.parseInt(simInput.getText());
+            showSimulations = everyCheckBox.isSelected();
+            customDataSet = customCheckBox.isSelected();
+            waitForClick = waitCheckBox.isSelected();
+            this.soundOn = soundCheckBox.isSelected();    
+        } catch (Exception e) {
+            System.err.println("Check your input.");
+            return;
+        }
+
         // Removes all components of the panel (buttons, textfields, etc)
         panel.removeAll();
 
@@ -182,15 +203,6 @@ public class Main {
                 graphScreen.onClick((int) click.getX(), (int) click.getY());
             }
         });
-        
-        // Gets all the information inputted by the user
-        int size = Integer.parseInt(sizeInput.getText());
-        String algorithm = (String) dropDown.getSelectedItem();
-        int numSims = Integer.parseInt(simInput.getText());
-        boolean showSimulations = everyCheckBox.isSelected();
-        boolean customDataSet = customCheckBox.isSelected();
-        boolean waitForClick = waitCheckBox.isSelected();
-        this.soundOn = soundCheckBox.isSelected();
         
         // Create a new Graph Screen to be displayed
         graphScreen = new GraphScreen(this, size, waitForClick);
