@@ -26,4 +26,4 @@ After Start Simulation is clicked and the simulation ends, you will see a menu t
 Note, while the simulation is sorting, it cannot be stopped. To stop the program while its sorting, use Ctrl + C in the terminal.
 
 ## Credits and Acknowledgements
-Project started in Bitcamp 2023 Hackathon by UMD Students Minsi Hu, Alison Wang, and Jonathan Mei! 
+Project started in Bitcamp 2023 Hackathon by UMD Students Minsi Hu, Alison Wang, and Jonathan Mei! Minsi focused on implementing the sorting algorithms, Alison focused on creating the UI, and Jonathan focused on the graph rendering. Go team!
