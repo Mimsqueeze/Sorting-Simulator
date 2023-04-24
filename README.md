@@ -6,6 +6,7 @@ To get started using this program, you will need to clone the repository. Then, 
 
 ## Instructions of Use
 When you start running the program, you will see a menu with the title "Sorting Algorithm Simulator", with a bunch of options. Here's a description of the options:
+![image](https://user-images.githubusercontent.com/101283845/233898861-b93d19e5-e549-4cac-af8a-980eb18d5844.png)
 
 | Option | Description |
 | --- | --- |
