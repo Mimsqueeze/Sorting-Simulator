@@ -174,13 +174,13 @@ public class Main {
         boolean waitForClick;
 
         try {
-            size = Integer.parseInt(sizeInput.getText());
+            size = Math.abs(Integer.parseInt(sizeInput.getText()));
             algorithm = (String) dropDown.getSelectedItem();
-            numSims = Integer.parseInt(simInput.getText());
+            numSims = Math.abs(Integer.parseInt(simInput.getText()));
             showSimulations = everyCheckBox.isSelected();
             customDataSet = customCheckBox.isSelected();
             waitForClick = waitCheckBox.isSelected();
-            this.soundOn = soundCheckBox.isSelected();    
+            this.soundOn = soundCheckBox.isSelected();
         } catch (Exception e) {
             System.err.println("Check your input.");
             return;

@@ -72,27 +72,31 @@ class Sim {
             }
         } else {
             // Goes here if don't show all simulations
-
-            // Sets show to true for a single simulation to be displayed
-            show= true;
-
-            // Randomize the array
-            createArray();
-
-            // Update the Simulation Number
-            data[Constants.DATA_INDICES.NUM_SIMULATIONS]= 1;
-
-            // Sort the array
-            sort();
-
-            // Update the graph screen
-            graphScreen.updateRender(arr, null, data, Constants.Mode.DEFAULT);
-
-            // Turn show to off
-            show= false;
             
-            // Refresh the data array
-            data= new long[Constants.DATA_INDICES.DATA_SIZE];
+            /* NOTE: NO LONGER SHOWING ONE SIMULATION IF NUM_SIMULATIONS IS GREATER THAN 1. WILL ONLY SHOW RESULTS. */
+
+            if (totalSimulations == 1) {
+                // Sets show to true for a single simulation to be displayed
+                show= true;
+
+                // Randomize the array
+                createArray();
+
+                // Update the Simulation Number
+                data[Constants.DATA_INDICES.NUM_SIMULATIONS]= 1;
+
+                // Sort the array
+                sort();
+
+                // Update the graph screen
+                graphScreen.updateRender(arr, null, data, Constants.Mode.DEFAULT);
+
+                // Turn show to off
+                show= false;
+                
+                // Refresh the data array
+                data= new long[Constants.DATA_INDICES.DATA_SIZE];
+            }
 
             // Run totalSimulations without displaying
             for (int i= 1; i <= totalSimulations; i++) {
