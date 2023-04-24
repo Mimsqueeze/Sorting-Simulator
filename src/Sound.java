@@ -1,5 +1,3 @@
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;

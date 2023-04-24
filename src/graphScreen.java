@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+
 public class GraphScreen {
 
     // Reference to Main Program
@@ -44,26 +45,31 @@ public class GraphScreen {
 
     // Render mode
     private Constants.Mode mode;
-    
+
+    // Whether of not to wait for click to continue next step
+    private boolean wait;
     // graphScreen constructor to create a new frame to render
-    GraphScreen(Main main, int size) {
+    GraphScreen(Main main, int size, boolean wait) {
         this.main= main;
         this.SIZE= size;
         this.LARGEST= size;
+        this.wait= wait;
     }
 
-    // Sets the size
+    // Sets the size of the array
     public void setSize(int size) {
         SIZE= size;
     }
 
+    // Sets the largest element of the array
     public void setLargest(int largest) {
         LARGEST= largest;
     }
-
+    
     // Function called to render each frame of the graph
     public void render() {
         this.graphics= (Graphics2D) main.panel.getGraphics();
+
         // Fill in the rectangles (bars) for the graph
         for (int i= 0; i < SIZE; i++) {
 
@@ -77,12 +83,16 @@ public class GraphScreen {
         }
         if (mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
             if (mode == Constants.Mode.COMPARE) { // Comparing
+                // System.out.println("Comparing");
                 graphics.setColor(COMPARECOLOR);
             } else if (mode == Constants.Mode.SWAP) { // Swapping
+                // System.out.println("Swapping");
                 graphics.setColor(SWAPCOLOR);
             } else if (mode == Constants.Mode.INSERT) { // Inserting
+                // System.out.println("Inserting");
                 graphics.setColor(INSERTCOLOR);
             } else if (mode == Constants.Mode.READ) { // Reading
+                // System.out.println("Reading");
                 graphics.setColor(READCOLOR);
             }
             // If sound enabled, split execution to play a sound while updating the highlighted positions
@@ -97,8 +107,19 @@ public class GraphScreen {
                     graphics.fillRect(pointers[i]*Constants.SCREEN_SIZES.WIDTH/SIZE, Constants.SCREEN_SIZES.HEIGHT - (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE), (Constants.SCREEN_SIZES.WIDTH/SIZE)+1, Constants.SCREEN_SIZES.HEADER + (Constants.SCREEN_SIZES.BARHEIGHT*array[pointers[i]]/SIZE));
             }
         }
+        
         // Fill Header Information
         displayInformation();
+        
+        //
+        if (wait && mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
+            try {
+                System.in.read();
+                System.in.read();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void displayInformation() {
@@ -144,10 +165,13 @@ public class GraphScreen {
 
     // Function is called when user clicks on the screen
     public void onClick(int x, int y) {
-
+        if (mode != Constants.Mode.WAITING)
+            render();
         // If the restart button is clicked, then go back to main menu screen
-        if (restart.contains((double) x, (double) y))
+        if (mode == Constants.Mode.FINISH && restart.contains((double) x, (double) y)) {
+            mode= Constants.Mode.WAITING;
             main.start();
+        }
     }
 
     public void updateRender(int[] array, int[] pointers, long[] data, Constants.Mode mode) {

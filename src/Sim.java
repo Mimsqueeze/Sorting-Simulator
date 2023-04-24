@@ -1,8 +1,6 @@
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 
 
 class Sim {
@@ -210,8 +208,10 @@ class Sim {
         data[Constants.DATA_INDICES.NUM_SWAPS]++;
 
         // Update the screen before the swap
-        if (show && !graphScreen.speedUp)
+        if (show && !graphScreen.speedUp) {
+            // System.out.println(arr[a] + " " + arr[b]);
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
+        }
 
         // Swap the elements
         int temp= arr[a];
@@ -219,8 +219,10 @@ class Sim {
         arr[b]= temp;
 
         // Update the screen after the swap
-        if (show)
+        if (show) {
+            // System.out.println(arr[a] + " " + arr[b]);
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
+        }
 
         // Return true as in swap successful
         return true;
