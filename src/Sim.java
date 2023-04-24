@@ -209,7 +209,7 @@ class Sim {
 
         // Update the screen before the swap
         if (show && !graphScreen.speedUp) {
-            System.out.println(arr[a] + " " + arr[b]);
+            // System.out.println(arr[a] + " " + arr[b]);
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
         }
 
@@ -220,7 +220,7 @@ class Sim {
 
         // Update the screen after the swap
         if (show) {
-            System.out.println(arr[a] + " " + arr[b]);
+            // System.out.println(arr[a] + " " + arr[b]);
             graphScreen.updateRender(arr, pointers, data, Constants.Mode.SWAP);
         }
 

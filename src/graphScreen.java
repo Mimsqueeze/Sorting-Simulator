@@ -111,6 +111,7 @@ public class GraphScreen {
         // Fill Header Information
         displayInformation();
         
+        //
         if (wait && mode != Constants.Mode.DEFAULT && mode != Constants.Mode.FINISH) {
             try {
                 System.in.read();
@@ -164,10 +165,13 @@ public class GraphScreen {
 
     // Function is called when user clicks on the screen
     public void onClick(int x, int y) {
-        render();
+        if (mode != Constants.Mode.WAITING)
+            render();
         // If the restart button is clicked, then go back to main menu screen
-        if (mode == Constants.Mode.FINISH && restart.contains((double) x, (double) y))
+        if (mode == Constants.Mode.FINISH && restart.contains((double) x, (double) y)) {
+            mode= Constants.Mode.WAITING;
             main.start();
+        }
     }
 
     public void updateRender(int[] array, int[] pointers, long[] data, Constants.Mode mode) {

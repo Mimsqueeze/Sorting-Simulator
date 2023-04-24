@@ -3,7 +3,7 @@ public final class Constants {
     private Constants(){}
 
     // Enum to declare different states of rendering the graph
-    public static enum Mode {DEFAULT, COMPARE, SWAP, INSERT, READ, FINISH};
+    public static enum Mode {DEFAULT, COMPARE, SWAP, INSERT, READ, FINISH, WAITING};
 
     // Class to store screen sizes
     public final static class SCREEN_SIZES {
