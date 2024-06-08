@@ -21,7 +21,7 @@ When you start running the program, you will see a menu with the title "Sorting 
 | Exit | If clicked, exits the program |
 
 After Start Simulation is clicked and the simulation ends, you will see a menu that displays the average number of comparisons, swaps, insertions, and the amount of time taken for the given sorting algorithm. You will also see a "New Simulation" button, which, when pressed, will bring you back to the Main Menu to begin another simulation. 
-![image](https://user-images.githubusercontent.com/101283845/233898929-65c0d341-6c32-41b9-84f3-05aaa1382f05.png)
+![image](https://github.com/Mimsqueeze/Sorting-Simulator/assets/101283845/e53dfdab-d31b-4a77-b773-3ca8a5e3af3f)
 
 Note, while the simulation is sorting, it cannot be stopped. To stop the program while its sorting, use Ctrl + C in the terminal.
 
